@@ -13,7 +13,7 @@
   // ======== DOWNLOAD + PAYMENT SETTINGS — paste your links here ========
   window.NOVADOCK = {
     // Free download: upload the installer to GitHub → novadock-site → Releases (file name must match)
-    freeUrl: "https://github.com/vikas-swami/novadock-site/releases/latest/download/NovaDock_0.1.0_x64-setup.exe",
+    freeUrl: "download/NovaDock_0.1.0_x64-setup.exe",
     // Pro checkout: your Dodo Payments (or Gumroad) payment link for "NovaDock Pro"
     checkoutUrl: "https://checkout.dodopayments.com/buy/pdt_0NrqnhhYoS5XABSowkT3c?quantity=1&redirect_url=https://vikas-swami.github.io%2Fnovadock-site%2F%3Fpurchased%3D1"
   };
@@ -450,7 +450,7 @@ html{scroll-behavior:smooth}
 <script>
 (function () {
   var cfg = window.NOVADOCK || {};
-  document.querySelectorAll('[data-free]').forEach(function (a) { if (cfg.freeUrl) a.href = cfg.freeUrl; });
+  document.querySelectorAll('[data-free]').forEach(function (a) { if (cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', 'NovaDock_0.1.0_x64-setup.exe'); } });
   var card = document.querySelector('[data-buy="card"]');
   var note = document.querySelector('[data-buy-note]');
   if (cfg.checkoutUrl) {
