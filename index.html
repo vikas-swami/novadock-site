@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NovaDock — a smart Mac-style dock for Windows</title>
+<meta name="description" content="NovaDock turns the Windows taskbar into a Mac-style dock and menu bar with live widgets: calendar, music, weather, system stats and your own business numbers. One-time payment.">
+<meta property="og:title" content="NovaDock — a smart dock for Windows">
+<meta property="og:description" content="Mac-style dock, menu bar and live widgets for Windows 10 & 11.">
+<meta property="og:image" content="assets/hero.jpg">
+<meta name="theme-color" content="#07080d">
+<script>
+  // ======== PAYMENT SETTINGS — paste your links here ========
+  // checkoutUrl: your Gumroad / Lemon Squeezy / Polar product link (cards, PayPal, and UPI on Gumroad)
+  // upiUrl (optional): a Razorpay Payment Page link for Indian buyers paying by UPI
+  window.NOVADOCK = {
+    checkoutUrl: "",
+    upiUrl: ""
+  };
+</script>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#07080d}
+a{color:#8fb0ff;text-decoration:none}a:hover{color:#c3d3ff}
+.nd *{box-sizing:border-box}
+.nd h1,.nd h2,.nd h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;letter-spacing:-0.02em}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.span4{grid-column:span 4}.span2{grid-column:span 2}.span3{grid-column:span 3}
+.navlinks{display:flex;gap:28px;align-items:center}
+.btn{transition:transform .15s ease, background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary:hover{background:#5481ff !important}
+.btn-ghost:hover{background:rgba(255,255,255,0.1) !important}
+.faq-q:hover{background:rgba(255,255,255,0.04) !important}
+.shot{transition:transform .3s ease}
+.shot:hover{transform:translateY(-4px)}
+@media (max-width: 960px){
+  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .span4,.span3,.span2{grid-column:span 2}
+}
+@media (max-width: 860px){ .try-frame{display:none} }
+@media (max-width: 640px){
+  .g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
+  .navlinks{display:none}
+  .hero-title{font-size:44px !important}
+  .sec-title{font-size:34px !important}
+  .wrap{padding-left:20px !important;padding-right:20px !important}
+}
+
+details.faq summary::-webkit-details-marker{display:none}
+details.faq[open] .sign{transform:rotate(45deg)}
+.sign{transition:transform .2s ease;display:inline-block}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="nd" style="width: 100%; min-height: 100%; background: #07080d; color: #f4f5f8; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
+
+<!-- NAV -->
+<header style="position: sticky; top: 0; z-index: 20; background: rgba(7,8,13,0.82); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.07)">
+  <nav class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+    <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #f4f5f8; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 19px">
+      <span style="width: 32px; height: 32px; border-radius: 9px; background: #3a6bff; display: grid; place-items: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"></path></svg>
+      </span>
+      NovaDock
+    </a>
+    <div class="navlinks" style="font-size: 15px">
+      <a href="#try" style="color: #c4c7d1">Try it</a>
+      <a href="#features" style="color: #c4c7d1">Features</a>
+      <a href="#widgets" style="color: #c4c7d1">Widgets</a>
+      <a href="#themes" style="color: #c4c7d1">Themes</a>
+      <a href="#pricing" style="color: #c4c7d1">Pricing</a>
+      <a href="#faq" style="color: #c4c7d1">FAQ</a>
+    </div>
+    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; min-height: 44px; display: inline-flex; align-items: center">Get NovaDock</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="top" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 88px 32px 40px; text-align: center">
+  <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #c4c7d1; font-size: 14px">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="0" y="8.6" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="8.6" width="7.4" height="7.4" rx="1"></rect></svg>
+    For Windows 10 &amp; 11
+  </div>
+  <h1 class="hero-title" style="margin: 22px auto 0; max-width: 900px; font-size: 76px; line-height: 1.02; font-weight: 700">Your taskbar, reborn as a smart dock.</h1>
+  <p style="margin: 22px auto 0; max-width: 640px; font-size: 20px; color: #a9adb9">A Mac-style dock, a clean menu bar and live widgets for your calendar, music, weather, system and your own business numbers. All in one glassy bar.</p>
+  <div style="margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
+    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
+      Get NovaDock — $6.99
+    </a>
+    <a href="#demo" class="btn btn-ghost" style="background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.12); padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+      Watch the demo
+    </a>
+  </div>
+  <p style="margin: 16px 0 0; font-size: 14px; color: #8a8f9c">One-time payment · Free updates · No account needed</p>
+  <div style="margin-top: 56px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 120px rgba(58,107,255,0.18), 0 20px 60px rgba(0,0,0,0.6)">
+    <img src="assets/hero.jpg" alt="NovaDock on a Windows desktop: menu bar at the top, glass dock at the bottom and the calendar panel open" style="display: block; width: 100%; height: auto">
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">See it in action</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Stop opening apps. Just glance.</h2>
+    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">Meetings, music, weather, CPU and your sales are always one look away. Click any widget for the full view.</p>
+  </div>
+  <div style="margin-top: 40px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000">
+    <video src="assets/demo.mp4" poster="assets/hero.jpg" controls="controls" playsinline="playsinline" muted="muted" preload="metadata" style="display: block; width: 100%; height: auto"></video>
+  </div>
+</section>
+
+<!-- TRY IT -->
+<section id="try" class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 32px">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Playground</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Try it right here. No download.</h2>
+    <p style="margin: 0; max-width: 640px; color: #a9adb9; font-size: 18px">This is the real NovaDock interface running in your browser with sample data. Hover over the dock, click the widgets, open Launchpad, switch themes, or open Settings and change anything.</p>
+  </div>
+  <div class="try-frame" style="border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #07080d">
+    <iframe src="play/playground.html" title="NovaDock live playground" loading="lazy" style="display: block; width: 100%; height: 900px; border: 0"></iframe>
+  </div>
+  <p style="margin: 16px 0 0; text-align: center"><a href="play/playground.html" target="_blank" rel="noopener">Open the playground full screen →</a></p>
+</section>
+
+<!-- FEATURES BENTO -->
+<section id="features" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Everything in one bar</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1; max-width: 760px">The parts of macOS you miss, built properly for Windows.</h2>
+  </div>
+  <div class="bento">
+    <article class="span4" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 18px; overflow: hidden">
+      <div>
+        <h3 style="margin: 0 0 6px; font-size: 24px">A dock that feels alive</h3>
+        <p style="margin: 0; color: #a9adb9">Icons grow under your cursor, open apps get a dot, and windows group per app. Pin anything: apps, folders, files or websites. Drag it onto the dock and it stays.</p>
+      </div>
+      <img src="assets/dock-magnify.jpg" alt="Dock with magnified icons under the cursor" style="width: 100%; border-radius: 14px; display: block">
+    </article>
+    <article class="span2" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(91,140,255,0.15); color: #8fb0ff; display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path></svg>
+      </span>
+      <h3 style="margin: 0; font-size: 22px">A real menu bar</h3>
+      <p style="margin: 0; color: #a9adb9">The active app's name, power and lock menu, Control Center, and any widgets you like, in any order.</p>
+    </article>
+    <article class="span2" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,159,10,0.15); color: #ffb54d; display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h8l-1 8 10-12h-8z"></path></svg>
+      </span>
+      <h3 style="margin: 0; font-size: 22px">Smart automations</h3>
+      <p style="margin: 0; color: #a9adb9">You get a reminder before each meeting and your music pauses itself. Low-battery and high-CPU alerts. Alerts wait while you focus.</p>
+    </article>
+    <article class="span4" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; overflow: hidden">
+      <div style="flex: 1 1 260px; min-width: 0">
+        <h3 style="margin: 0 0 6px; font-size: 24px">Launchpad for every app</h3>
+        <p style="margin: 0; color: #a9adb9">One click or <b style="color: #f4f5f8">Ctrl + Alt + Space</b> shows every installed app in a searchable grid. Type and press Enter.</p>
+      </div>
+      <img src="assets/launchpad.jpg" alt="Launchpad grid of apps with search" style="flex: 1 1 320px; min-width: 0; width: 100%; border-radius: 14px; display: block">
+    </article>
+    <article class="span3" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(48,209,88,0.15); color: #5ee07f; display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </span>
+      <h3 style="margin: 0; font-size: 22px">Safe by design</h3>
+      <p style="margin: 0; color: #a9adb9">Quit NovaDock and your Windows taskbar comes back exactly as it was. Fullscreen videos and games hide the dock on their own.</p>
+    </article>
+    <article class="span3" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(191,90,242,0.15); color: #d199f7; display: grid; place-items: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a2 2 0 110-4h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.6 1.6 0 001.8.3H9a1.6 1.6 0 001-1.5V3a2 2 0 114 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 00-.3 1.8V9a1.6 1.6 0 001.5 1H21a2 2 0 110 4h-.1a1.6 1.6 0 00-1.5 1z"></path></svg>
+      </span>
+      <h3 style="margin: 0; font-size: 22px">Customise everything</h3>
+      <p style="margin: 0; color: #a9adb9">You can change icon size, spacing, magnification, position and layout. The tint, blur, border, corners, fonts and accent colour are yours too. Back it all up to one file.</p>
+    </article>
+  </div>
+</section>
+
+<!-- WIDGETS -->
+<section id="widgets" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; align-items: center; text-align: center">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Widgets</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Small tiles. Big picture.</h2>
+    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">16 built-in widgets, plus unlimited custom ones. Each sits in the dock or the menu bar and opens a full panel when you click it.</p>
+  </div>
+  <div class="g3">
+    
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-calendar.png" alt="Calendar panel with month view and upcoming meetings" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Calendar & meetings</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Google, Outlook and iCloud. See what’s next and get a reminder before it starts.</p>
+        </figcaption>
+      </figure>
+    
+
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-media.png" alt="Now playing panel with album art and playback controls" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Now Playing</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Album art and controls for any music or video app.</p>
+        </figcaption>
+      </figure>
+    
+
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-weather.png" alt="Weather panel with temperature and five-day forecast" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Weather</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Current conditions and a 5-day forecast. No API key needed.</p>
+        </figcaption>
+      </figure>
+    
+
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-control.png" alt="Control Center panel with quick toggles" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Control Center</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Focus mode, dock hiding, appearance, volume, lock and sleep.</p>
+        </figcaption>
+      </figure>
+    
+
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-pomodoro.png" alt="Focus timer panel with a countdown ring" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Focus timer</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Pomodoro sessions with breaks, and alerts held while you work.</p>
+        </figcaption>
+      </figure>
+    
+
+      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
+          <img src="assets/panel-custom.png" alt="Custom sales widget panel with value and sparkline" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
+        </div>
+        <figcaption>
+          <h3 style="margin: 0 0 4px; font-size: 19px">Your live numbers</h3>
+          <p style="margin: 0; color: #a9adb9; font-size: 15px">Sales, orders, prices: any JSON API, with a history sparkline.</p>
+        </figcaption>
+      </figure>
+    
+  </div>
+  <p style="margin: 28px 0 0; text-align: center; color: #8a8f9c; font-size: 15px">Also included: Clock · World Clock · Battery · System Monitor · To-do · Notes · Downloads · Recycle Bin · Launchpad · Show Desktop · Focus mode</p>
+</section>
+
+<!-- CUSTOM WIDGETS HIGHLIGHT -->
+<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div class="g2" style="align-items: center; gap: 48px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span style="color: #5ee07f; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Only in NovaDock</span>
+      <h2 class="sec-title" style="margin: 0; font-size: 44px; line-height: 1.1">Put your business numbers in your dock.</h2>
+      <p style="margin: 0; color: #a9adb9; font-size: 18px">Any API that returns JSON becomes a live tile: today's orders, Stripe balance, currency rates, crypto prices, followers. Pick a value and a refresh time. NovaDock tells you when the number moves.</p>
+      <ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Ready-made presets: Shopify orders, Stripe balance, USD→INR, Bitcoin and GitHub stars</span></li>
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Private headers and API keys stay on your PC</span></li>
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Alerts when the value changes or crosses a limit</span></li>
+      </ul>
+    </div>
+    <div style="position: relative">
+      <img src="assets/settings-custom.jpg" alt="Custom widget settings with URL, value path, headers and alerts" style="width: 100%; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); display: block">
+      <img src="assets/panel-custom.png" alt="Sales today panel showing a live value and a sparkline" style="position: absolute; right: -16px; bottom: -36px; width: 46%; border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); display: block">
+    </div>
+  </div>
+</section>
+
+<!-- THEMES -->
+<section id="themes" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 120px 32px 40px">
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; align-items: center; text-align: center">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Make it yours</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">9 themes. 4 positions. Endless tweaks.</h2>
+    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">Real Acrylic and Mica blur from Windows, or a custom-drawn glass look with any corner radius. Put the dock at the bottom, left, right or top, as a floating pill or a full-width bar.</p>
+  </div>
+  <div style="border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000">
+    <video src="assets/themes.mp4" poster="assets/desktop-light.jpg" controls="controls" playsinline="playsinline" muted="muted" loop="loop" preload="metadata" style="display: block; width: 100%; height: auto"></video>
+  </div>
+  <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
+    
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #1d2029; border: 1px solid rgba(255,255,255,0.3)"></span>Liquid Glass
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.3)"></span>macOS Dark
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #f4f4f6; border: 1px solid rgba(255,255,255,0.3)"></span>macOS Light
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #202020; border: 1px solid rgba(255,255,255,0.3)"></span>Windows 11 Mica
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #7c5cff; border: 1px solid rgba(255,255,255,0.3)"></span>Midnight
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #e0218a; border: 1px solid rgba(255,255,255,0.3)"></span>Rose Gold
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #2dd4bf; border: 1px solid rgba(255,255,255,0.3)"></span>Aurora
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #00ffd5; border: 1px solid rgba(255,255,255,0.3)"></span>Neon
+      </span>
+    
+
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
+        <span style="width: 14px; height: 14px; border-radius: 50%; background: #000000; border: 1px solid rgba(255,255,255,0.3)"></span>Minimal
+      </span>
+    
+  </div>
+</section>
+
+<!-- BUILT FOR -->
+<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <h2 class="sec-title" style="margin: 0 0 32px; font-size: 40px; line-height: 1.1; text-align: center">Built for people who live on their PC</h2>
+  <div class="g4">
+    
+      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+        <h3 style="margin: 0; font-size: 20px">Online sellers</h3>
+        <p style="margin: 0; color: #a9adb9; font-size: 15px">Watch today’s orders and revenue tick up while you work. No dashboard tab needed.</p>
+      </article>
+    
+
+      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+        <h3 style="margin: 0; font-size: 20px">Developers</h3>
+        <p style="margin: 0; color: #a9adb9; font-size: 15px">CPU, RAM, GitHub stars and a focus timer in one bar, with a launcher one shortcut away.</p>
+      </article>
+    
+
+      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+        <h3 style="margin: 0; font-size: 20px">Founders</h3>
+        <p style="margin: 0; color: #a9adb9; font-size: 15px">Next meeting, Stripe balance and key numbers in one glance.</p>
+      </article>
+    
+
+      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+        <h3 style="margin: 0; font-size: 20px">Students</h3>
+        <p style="margin: 0; color: #a9adb9; font-size: 15px">Pomodoro, to-dos and notes without opening another app.</p>
+      </article>
+    
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="background: #0d1a14; border: 1px solid rgba(94,224,127,0.2); border-radius: 26px; padding: 48px; display: flex; flex-direction: column; gap: 28px">
+    <h2 class="sec-title" style="margin: 0; font-size: 40px; line-height: 1.1">Private by default.</h2>
+    <div class="g3">
+      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">Runs on your PC</h3><p style="margin: 0; color: #b7c4bc">Your layout, notes, to-dos and keys never leave your computer.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">No account, no tracking</h3><p style="margin: 0; color: #b7c4bc">No sign-up and no telemetry. NovaDock has no server to send your data to.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">Only what you turn on</h3><p style="margin: 0; color: #b7c4bc">Weather, calendars and your APIs talk straight to their own services.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
+  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 36px">
+    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Pricing</span>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Pay once. Keep it forever.</h2>
+  </div>
+  <div style="max-width: 480px; margin: 0 auto; background: #11131a; border: 1px solid rgba(255,255,255,0.12); border-radius: 26px; padding: 36px; display: flex; flex-direction: column; gap: 22px; box-shadow: 0 30px 90px rgba(58,107,255,0.15)">
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <h3 style="margin: 0; font-size: 22px">NovaDock Lifetime</h3>
+      <span style="padding: 4px 12px; border-radius: 999px; background: rgba(91,140,255,0.16); color: #a9c0ff; font-size: 13px; font-weight: 600">Launch price</span>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 12px">
+      <span style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 64px; font-weight: 700; line-height: 1">$6.99</span>
+      <span style="color: #8a8f9c; text-decoration: line-through; font-size: 22px">$14.99</span>
+    </div>
+    <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+      
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Mac-style dock, menu bar and Launchpad</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>16 widgets + unlimited custom API widgets</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Calendar, music, weather and system panels</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Automations, focus mode and quiet hours</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>9 themes with real Acrylic / Mica blur</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Free updates for life</span></li>
+      
+
+        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>No account, no tracking</span></li>
+      
+    </ul>
+    <a href="#pricing" data-buy="card" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 15px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Buy now — $6.99</a>
+    <a href="#pricing" data-buy="upi" class="btn btn-ghost" style="display: none; background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.14); padding: 13px 24px; border-radius: 14px; font-weight: 600; font-size: 16px; text-align: center; min-height: 48px; align-items: center; justify-content: center">Pay with UPI (India)</a>
+    <p data-buy-note style="display: none; margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,159,10,0.12); color: #ffcf8a; font-size: 14px; text-align: center">Checkout opens soon. Payment links are not set up yet.</p>
+    <p style="margin: 0; text-align: center; color: #8a8f9c; font-size: 14px">Windows 10 &amp; 11 · 64-bit · Instant download after payment</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="wrap" style="max-width: 860px; margin: 0 auto; padding: 96px 32px 40px">
+  <h2 class="sec-title" style="margin: 0 0 28px; font-size: 44px; line-height: 1.1; text-align: center">Questions, answered</h2>
+  <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1)">
+    <details class="faq" open style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>What does NovaDock actually do?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">It replaces the Windows taskbar with a Mac-style dock at the bottom and a menu bar at the top. Both can hold live widgets: calendar, music, weather, system stats, focus timer and your own custom numbers. Click any widget to open a full panel.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it work on Windows 10 and Windows 11?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes, on 64-bit Windows 10 and Windows 11. On Windows 10 the Mica effect falls back to Acrylic blur.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>What happens to my Windows taskbar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">You choose: hidden, auto-hide or always visible. When you quit NovaDock, the taskbar and your screen space go back exactly as they were. If something ever goes wrong, run "NovaDock.exe --restore-taskbar".</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>How do I connect my Google, Outlook or iCloud calendar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Paste your calendar’s secret iCal link in Settings, under Calendar & Weather. It is read-only, and NovaDock fetches it directly from your PC. Nothing goes through our servers.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Is it a subscription?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. You pay once and keep NovaDock forever, including free updates.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Can I put the dock on the left, right or top?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes. Choose bottom, left, right or top, as a floating pill or a full-width bar, with auto-hide if you want it out of the way.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it slow down my PC?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">NovaDock is a native Tauri app: a small installer and a light memory footprint. Fullscreen games and videos hide the dock automatically.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Do you collect any data?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. There is no account and no telemetry. Your settings, notes and API keys stay in your own AppData folder.</p></details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px">
+  <div style="background: #11131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; padding: 64px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px">
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1; max-width: 720px">Give Windows the dock it always deserved.</h2>
+    <p style="margin: 0; color: #a9adb9; font-size: 18px">Set up in under a minute. Quit any time, and the taskbar comes right back.</p>
+    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center">Get NovaDock — $6.99</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid rgba(255,255,255,0.07)">
+  <div class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; color: #8a8f9c; font-size: 14px">
+    <span>© 2026 NovaDock. Made in India.</span>
+    <div style="display: flex; gap: 22px; flex-wrap: wrap">
+      <a href="#faq" style="color: #a9adb9">Help</a>
+      <a href="#privacy" style="color: #a9adb9">Privacy</a>
+      <a href="#terms" style="color: #a9adb9">Terms</a>
+      <a href="#refunds" style="color: #a9adb9">Refunds</a>
+      <a href="#contact" style="color: #a9adb9">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var cfg = window.NOVADOCK || {};
+  var card = document.querySelector('[data-buy="card"]');
+  var upi = document.querySelector('[data-buy="upi"]');
+  var note = document.querySelector('[data-buy-note]');
+  if (cfg.checkoutUrl) {
+    card.href = cfg.checkoutUrl;
+    if (/gumroad\.com|gum\.co/.test(cfg.checkoutUrl)) {
+      var g = document.createElement('script'); g.src = 'https://gumroad.com/js/gumroad.js'; document.body.appendChild(g);
+    } else { card.target = '_blank'; card.rel = 'noopener'; }
+  } else {
+    card.addEventListener('click', function (e) { e.preventDefault(); note.style.display = 'block'; });
+  }
+  if (cfg.upiUrl) { upi.href = cfg.upiUrl; upi.target = '_blank'; upi.rel = 'noopener'; upi.style.display = 'flex'; }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NovaDock Playground — try it in your browser</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #07080d; color: #f4f5f8; font-family: Inter, "Segoe UI", system-ui, sans-serif; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: center; padding: 14px 16px; }
+  .group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .group > span { font-size: 12px; color: #9aa0ad; text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
+  .chip { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: #e8eaf0; border-radius: 999px; padding: 7px 13px; font: 500 13px inherit; font-family: inherit; cursor: pointer; min-height: 34px; display: inline-flex; align-items: center; gap: 7px; }
+  .chip:hover { background: rgba(255,255,255,.1); }
+  .chip.on { background: #3a6bff; border-color: #3a6bff; color: #fff; }
+  .chip i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,.35); }
+  .chip.primary { background: #3a6bff; border-color: #3a6bff; color: #fff; font-weight: 600; }
+  input[type=range] { accent-color: #3a6bff; width: 120px; }
+  #stage { padding: 0 16px 24px; }
+  #desk { position: relative; margin: 0 auto; width: 100%; max-width: 1360px; height: 760px; border-radius: 18px; overflow: hidden;
+          background: #222 center/cover no-repeat; box-shadow: 0 30px 90px rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.1); }
+  #desk iframe { position: absolute; border: 0; background: transparent; }
+  .win { position: absolute; left: 12%; top: 13%; width: 62%; height: 58%; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 30px 80px rgba(0,0,0,.45); color: #1d1d1f; }
+  .win .t { height: 36px; background: #f1f1f4; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-bottom: 1px solid #e3e3e8; }
+  .win .t b { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .win .c { padding: 30px 40px; }
+  .win h2 { margin: 0 0 8px; font-size: 28px; letter-spacing: -.02em; }
+  .win p { margin: 0 0 18px; color: #666; font-size: 14px; }
+  .win .g { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+  .win .g div { height: 110px; border-radius: 12px; background: linear-gradient(135deg,#e9ecff,#fbe9f4); }
+  .win .g div:nth-child(2) { background: linear-gradient(135deg,#e6fbf3,#e9f2ff); }
+  .win .g div:nth-child(3) { background: linear-gradient(135deg,#fff3e3,#ffe9ec); }
+  #panelWrap { position: absolute; z-index: 30; border-radius: 20px; overflow: hidden; opacity: 0; pointer-events: none; transform: scale(.97);
+               transition: opacity .18s ease, transform .2s cubic-bezier(.2,.9,.3,1.15); backdrop-filter: blur(30px) saturate(1.4); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  #panelWrap.on { opacity: 1; pointer-events: auto; transform: none; }
+  #panelWrap iframe { position: static !important; width: 100%; height: 100%; }
+  #lpBack { position: absolute; inset: 0; z-index: 25; backdrop-filter: blur(24px) brightness(.8); opacity: 0; pointer-events: none; transition: opacity .25s; }
+  #lpBack.on { opacity: 1; pointer-events: auto; }
+  #settingsWrap { position: absolute; z-index: 40; left: 50%; top: 50%; width: min(1000px, 94%); height: min(660px, 88%); transform: translate(-50%, -50%) scale(.97);
+                  border-radius: 12px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.6); opacity: 0; pointer-events: none; transition: all .2s; background: #1c1c1e; }
+  #settingsWrap.on { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+  #settingsWrap .t { height: 34px; background: #2a2a2d; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 14px; font-size: 13px; color: #c9cbd2; }
+  #settingsWrap .t button { border: 0; background: transparent; color: #c9cbd2; font-size: 20px; width: 34px; height: 30px; border-radius: 6px; cursor: pointer; }
+  #settingsWrap .t button:hover { background: #e81123; color: #fff; }
+  #settingsWrap iframe { position: static !important; width: 100%; height: calc(100% - 34px); }
+  #toast { position: absolute; z-index: 60; left: 50%; top: 52px; transform: translateX(-50%) translateY(-8px); opacity: 0; transition: all .25s; pointer-events: none;
+           background: rgba(15,15,20,.85); color: #fff; padding: 9px 16px; border-radius: 999px; font-size: 14px; border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(12px); white-space: nowrap; }
+  #toast.on { opacity: 1; transform: translateX(-50%); }
+  #hint { text-align: center; color: #9aa0ad; font-size: 14px; padding: 0 16px 10px; }
+  #mobile { display: none; padding: 40px 24px; text-align: center; color: #c4c7d1; }
+  @media (max-width: 860px) { #stage, .bar, #hint { display: none; } #mobile { display: block; } }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="group" id="themes"><span>Theme</span></div>
+    <div class="group" id="positions"><span>Dock</span></div>
+    <div class="group">
+      <button class="chip" id="mag">Magnification</button>
+      <button class="chip" id="layout">Full width</button>
+      <label class="chip" style="cursor:default">Size <input id="size" type="range" min="32" max="72" value="48" aria-label="Icon size"></label>
+    </div>
+    <button class="chip primary" id="openSettings">Open full Settings</button>
+  </div>
+  <div id="hint">Move your mouse over the dock, click any widget, try Launchpad, or open Settings and change anything. It all works live.</div>
+  <div id="stage">
+    <div id="desk">
+      <div class="win" aria-hidden="true">
+        <div class="t"><b style="background:#ff5f57"></b><b style="background:#febc2e"></b><b style="background:#28c840"></b></div>
+        <div class="c"><h2>Your desktop, calmer.</h2><p>This is a live preview of NovaDock running in your browser with sample data.</p><div class="g"><div></div><div></div><div></div></div></div>
+      </div>
+      <iframe id="f-menubar" title="NovaDock menu bar"></iframe>
+      <iframe id="f-dock" title="NovaDock dock"></iframe>
+      <div id="lpBack"></div>
+      <div id="panelWrap"><iframe id="f-panel" title="NovaDock panel"></iframe></div>
+      <div id="settingsWrap"><div class="t"><span>NovaDock Settings</span><button id="closeSettings" aria-label="Close settings">×</button></div><iframe id="f-settings" title="NovaDock settings"></iframe></div>
+      <div id="toast"></div>
+    </div>
+  </div>
+  <div id="mobile">The playground needs a mouse. Open this page on a laptop or desktop to try NovaDock live.</div>
+<script>
+(function () {
+  const desk = document.getElementById("desk");
+  const W = desk.clientWidth, H = desk.clientHeight;
+  const frames = { menubar: f("menubar"), dock: f("dock"), panel: f("panel"), settings: f("settings") };
+  function f(n) { return document.getElementById("f-" + n); }
+  const PRESETS = {
+    glass: { label: "Liquid Glass", wall: "dark", dot: "#1a1d27", ap: { blur: "css", mode: "dark", tint: "#1a1d27", tintOpacity: 48, borderColor: "#ffffff", borderOpacity: 22, radius: 24, accent: "#0a84ff", gloss: true, shadow: true, textColor: "" } },
+    light: { label: "Light", wall: "light", dot: "#f7f7fa", ap: { blur: "css", mode: "light", tint: "#f7f7fa", tintOpacity: 62, borderColor: "#ffffff", borderOpacity: 70, radius: 24, accent: "#007aff", gloss: true, shadow: true, textColor: "" } },
+    rose: { label: "Rose Gold", wall: "dark", dot: "#e0218a", ap: { blur: "css", mode: "dark", tint: "#2a0f22", tintOpacity: 62, borderColor: "#d4af37", borderOpacity: 50, radius: 24, accent: "#e0218a", gloss: true, shadow: true, textColor: "" } },
+    midnight: { label: "Midnight", wall: "dark", dot: "#7c5cff", ap: { blur: "css", mode: "dark", tint: "#0b1020", tintOpacity: 66, borderColor: "#7c5cff", borderOpacity: 40, radius: 22, accent: "#7c5cff", gloss: true, shadow: true, textColor: "" } },
+    neon: { label: "Neon", wall: "dark", dot: "#00ffd5", ap: { blur: "css", mode: "dark", tint: "#050510", tintOpacity: 78, borderColor: "#00ffd5", borderOpacity: 60, radius: 16, accent: "#00ffd5", gloss: false, shadow: true, textColor: "#e8fffb" } },
+  };
+  let cfg = null, theme = "glass";
+  const src = (w) => `index.html?wall=0&embed=1&w=${w}&preset=glass&sw=${W}&sh=${H}`;
+  desk.style.backgroundImage = "url(assets/wall-dark.jpg)";
+  frames.menubar.src = src("menubar");
+  frames.dock.src = src("dock");
+  frames.panel.src = src("panel");
+  let settingsLoaded = false;
+
+  function post(fr, msg) { try { fr.contentWindow.postMessage(Object.assign({ nd: true, from: "parent" }, msg), "*"); } catch (e) {} }
+  function relay(msg, except) { for (const [k, fr] of Object.entries(frames)) if (k !== except && fr.src) post(fr, msg); }
+  function frameRect(name) { const r = frames[name].getBoundingClientRect(), d = desk.getBoundingClientRect(); return { x: r.left - d.left, y: r.top - d.top, w: r.width, h: r.height }; }
+  function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2200); }
+
+  // ---- layout (mirrors the real app's Rust logic)
+  const mbH = () => (cfg && cfg.menubar.enabled === false ? 0 : (cfg ? cfg.menubar.height : 30));
+  function layoutMenubar() {
+    const m = frames.menubar.style;
+    m.left = "0px"; m.top = "0px"; m.width = W + "px"; m.height = (cfg ? cfg.menubar.height : 30) + "px";
+    m.display = cfg && cfg.menubar.enabled === false ? "none" : "block"; m.zIndex = 10;
+  }
+  let lastDock = null;
+  function layoutDock(a) {
+    if (a) lastDock = a; a = lastDock; if (!a) return;
+    const pos = (cfg && cfg.dock.position) || "bottom";
+    const margin = a.full ? 0 : Math.max(-a.inset, ((cfg && cfg.dock.margin) || 8) - a.inset);
+    const top = mbH(), areaH = H - top;
+    let w = a.width, h = a.height;
+    if (a.full) { if (pos === "left" || pos === "right") h = areaH; else w = W; }
+    w = Math.min(w, W); h = Math.min(h, H);
+    let x, y;
+    if (a.hidden) {
+      const s = 3;
+      if (pos === "top") { x = (W - w) / 2; y = top; h = s; } else if (pos === "left") { x = 0; y = top + (areaH - h) / 2; w = s; }
+      else if (pos === "right") { x = W - s; y = top + (areaH - h) / 2; w = s; } else { x = (W - w) / 2; y = H - s; h = s; }
+    } else if (pos === "top") { x = (W - w) / 2; y = top + margin; }
+    else if (pos === "left") { x = margin; y = top + (areaH - h) / 2; }
+    else if (pos === "right") { x = W - w - margin; y = top + (areaH - h) / 2; }
+    else { x = (W - w) / 2; y = H - h - margin; }
+    Object.assign(frames.dock.style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px", zIndex: 12, display: cfg && cfg.dock.enabled === false ? "none" : "block" });
+  }
+
+  // ---- panel
+  const wrap = document.getElementById("panelWrap"), lpBack = document.getElementById("lpBack");
+  let panel = { visible: false, kind: null, hiddenAt: 0, lastKind: null };
+  function hidePanel() {
+    if (!panel.visible) return;
+    wrap.classList.remove("on"); lpBack.classList.remove("on");
+    panel.visible = false; panel.hiddenAt = Date.now(); panel.lastKind = panel.kind; panel.kind = null;
+    relay({ type: "panel-state" });
+  }
+  function showPanel(m) {
+    if (panel.visible && panel.kind === m.kind) return hidePanel();
+    if (!panel.visible && panel.lastKind === m.kind && Date.now() - panel.hiddenAt < 350) return;
+    const w = Math.min(m.width, W - 20), h = Math.min(m.height, H - 20), gap = 10;
+    let x, y;
+    if (m.side === "center") { x = (W - w) / 2; y = (H - h) / 2 + 10; }
+    else {
+      const fr = frameRect(m.from === "menubar" ? "menubar" : "dock");
+      const ax = fr.x + m.ax, ay = fr.y + m.ay, aw = m.aw, ah = m.ah;
+      if (m.side === "above") { x = ax + aw / 2 - w / 2; y = ay - h - gap; }
+      else if (m.side === "below") { x = ax + aw / 2 - w / 2; y = ay + ah + 6; }
+      else if (m.side === "right") { x = ax + aw + gap; y = ay + ah / 2 - h / 2; }
+      else { x = ax - w - gap; y = ay + ah / 2 - h / 2; }
+    }
+    x = Math.max(8, Math.min(W - w - 8, x)); y = Math.max(8, Math.min(H - h - 8, y));
+    Object.assign(wrap.style, { left: x + "px", top: y + "px", width: w + "px", height: h + "px" });
+    post(frames.panel, { type: "open", kind: m.kind });
+    panel.visible = true; panel.kind = m.kind;
+    lpBack.classList.toggle("on", m.kind === "launchpad");
+    requestAnimationFrame(() => wrap.classList.add("on"));
+  }
+  // Losing focus to another frame or the desktop closes the panel, like the real app.
+  window.addEventListener("blur", () => setTimeout(() => { if (document.activeElement !== frames.panel) hidePanel(); }, 0));
+  document.querySelector(".bar").addEventListener("mousedown", () => hidePanel());
+  desk.addEventListener("mousedown", (e) => { if (e.target === desk || e.target.closest(".win") || e.target === lpBack) hidePanel(); });
+  window.addEventListener("keydown", (e) => { if (e.key === "Escape") { hidePanel(); closeSettings(); } });
+
+  // ---- settings
+  const sWrap = document.getElementById("settingsWrap");
+  function openSettings(tab) {
+    hidePanel();
+    if (!settingsLoaded) { frames.settings.src = src("settings") + (tab ? "#" + tab : ""); settingsLoaded = true; }
+    sWrap.classList.add("on");
+  }
+  function closeSettings() { sWrap.classList.remove("on"); }
+  document.getElementById("closeSettings").onclick = closeSettings;
+  document.getElementById("openSettings").onclick = () => openSettings("appearance");
+
+  // ---- messages from the NovaDock frames
+  window.addEventListener("message", (e) => {
+    const m = e.data; if (!m || !m.nd || m.from === "parent") return;
+    switch (m.type) {
+      case "ready": if (m.from === "dock") post(frames.dock, { type: "getconfig" }); break;
+      case "config-init": cfg = m.config; layoutMenubar(); layoutDock(); syncControls(); break;
+      case "config": cfg = m.config; relay({ type: "config", config: m.config }, m.from); layoutMenubar(); layoutDock(); syncControls(); break;
+      case "data": relay({ type: "data", key: m.key, value: m.value }, m.from); break;
+      case "docksize": layoutDock(m); break;
+      case "panel": showPanel(m); break;
+      case "hidepanel": hidePanel(); break;
+      case "launchpad": showPanel({ kind: "launchpad", side: "center", width: Math.min(920, W - 60), height: Math.min(600, H - 80) }); break;
+      case "settings": openSettings(m.tab); break;
+      case "toast": toast(m.text); break;
+    }
+  });
+
+  // ---- toolbar
+  function patch(p) { post(frames.dock, { type: "patch", patch: p }); }
+  const themesEl = document.getElementById("themes");
+  for (const [id, t] of Object.entries(PRESETS)) {
+    const b = document.createElement("button"); b.className = "chip"; b.dataset.theme = id;
+    b.innerHTML = `<i style="background:${t.dot}"></i>${t.label}`;
+    b.onclick = () => {
+      theme = id; desk.style.backgroundImage = `url(assets/wall-${t.wall}.jpg)`;
+      const p = {}; for (const [k, v] of Object.entries(t.ap)) p["appearance." + k] = v; p["appearance.preset"] = "custom"; patch(p); syncControls();
+    };
+    themesEl.appendChild(b);
+  }
+  const posEl = document.getElementById("positions");
+  for (const p of ["bottom", "left", "right", "top"]) {
+    const b = document.createElement("button"); b.className = "chip"; b.dataset.pos = p; b.textContent = p[0].toUpperCase() + p.slice(1);
+    b.onclick = () => patch({ "dock.position": p }); posEl.appendChild(b);
+  }
+  document.getElementById("mag").onclick = () => cfg && patch({ "dock.magnification": !cfg.dock.magnification });
+  document.getElementById("layout").onclick = () => cfg && patch({ "dock.layout": cfg.dock.layout === "full" ? "pill" : "full" });
+  const size = document.getElementById("size");
+  size.oninput = () => patch({ "dock.iconSize": +size.value });
+  function syncControls() {
+    document.querySelectorAll("[data-theme]").forEach((b) => b.classList.toggle("on", b.dataset.theme === theme));
+    if (!cfg) return;
+    document.querySelectorAll("[data-pos]").forEach((b) => b.classList.toggle("on", b.dataset.pos === cfg.dock.position));
+    document.getElementById("mag").classList.toggle("on", !!cfg.dock.magnification);
+    document.getElementById("layout").classList.toggle("on", cfg.dock.layout === "full");
+    if (document.activeElement !== size) size.value = cfg.dock.iconSize;
+  }
+  layoutMenubar(); syncControls();
+})();
+</script>
+</body>
+</html>
