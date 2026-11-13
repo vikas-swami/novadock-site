@@ -45,7 +45,8 @@ a{color:#8fb0ff;text-decoration:none}a:hover{color:#c3d3ff}
   .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
   .span4,.span3,.span2{grid-column:span 2}
 }
-@media (max-width: 860px){ .try-frame{display:none} }
+.hero-img{display:none}
+@media (max-width: 860px){ .try-frame{display:none !important} .hero-img{display:block} }
 @media (max-width: 640px){
   .g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
   .navlinks{display:none}
@@ -84,8 +85,21 @@ html{scroll-behavior:smooth}
   </nav>
 </header>
 
+<!-- PLAYGROUND (first thing visitors see) -->
+<section class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 14px 20px 0">
+  <div id="try">
+    <div class="try-frame" style="border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: #07080d; box-shadow: 0 40px 120px rgba(58,107,255,0.18), 0 20px 60px rgba(0,0,0,0.6)">
+      <iframe src="play/playground.html" title="NovaDock live playground" style="display: block; width: 100%; height: calc(100vh - 96px); min-height: 640px; max-height: 1000px; border: 0"></iframe>
+    </div>
+    <p class="try-frame" style="margin: 12px 0 0; font-size: 14px; color: #8a8f9c; text-align: center">Live demo, not a video. Hover over the dock, click the widgets, switch themes. <a href="play/playground.html" target="_blank" rel="noopener">Open full screen →</a></p>
+    <div class="hero-img" style="border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1)">
+      <img src="assets/hero.jpg" alt="NovaDock on a Windows desktop: menu bar at the top, glass dock at the bottom and the calendar panel open" style="display: block; width: 100%; height: auto">
+    </div>
+  </div>
+</section>
+
 <!-- HERO -->
-<section id="top" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 88px 32px 40px; text-align: center">
+<section id="top" class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 72px 32px 40px; text-align: center">
   <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #c4c7d1; font-size: 14px">
     <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="0" y="8.6" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="8.6" width="7.4" height="7.4" rx="1"></rect></svg>
     For Windows 10 &amp; 11
@@ -102,9 +116,6 @@ html{scroll-behavior:smooth}
     </a>
   </div>
   <p style="margin: 16px 0 0; font-size: 14px; color: #8a8f9c">One-time payment · Free updates · No account needed</p>
-  <div style="margin-top: 56px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 120px rgba(58,107,255,0.18), 0 20px 60px rgba(0,0,0,0.6)">
-    <img src="assets/hero.jpg" alt="NovaDock on a Windows desktop: menu bar at the top, glass dock at the bottom and the calendar panel open" style="display: block; width: 100%; height: auto">
-  </div>
 </section>
 
 <!-- DEMO -->
@@ -117,19 +128,6 @@ html{scroll-behavior:smooth}
   <div style="margin-top: 40px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000">
     <video src="assets/demo.mp4" poster="assets/hero.jpg" controls="controls" playsinline="playsinline" muted="muted" preload="metadata" style="display: block; width: 100%; height: auto"></video>
   </div>
-</section>
-
-<!-- TRY IT -->
-<section id="try" class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 32px">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Playground</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Try it right here. No download.</h2>
-    <p style="margin: 0; max-width: 640px; color: #a9adb9; font-size: 18px">This is the real NovaDock interface running in your browser with sample data. Hover over the dock, click the widgets, open Launchpad, switch themes, or open Settings and change anything.</p>
-  </div>
-  <div class="try-frame" style="border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #07080d">
-    <iframe src="play/playground.html" title="NovaDock live playground" loading="lazy" style="display: block; width: 100%; height: 900px; border: 0"></iframe>
-  </div>
-  <p style="margin: 16px 0 0; text-align: center"><a href="play/playground.html" target="_blank" rel="noopener">Open the playground full screen →</a></p>
 </section>
 
 <!-- FEATURES BENTO -->
