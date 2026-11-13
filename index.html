@@ -10,12 +10,12 @@
 <meta property="og:image" content="assets/hero.jpg">
 <meta name="theme-color" content="#07080d">
 <script>
-  // ======== PAYMENT SETTINGS — paste your links here ========
-  // checkoutUrl: your Gumroad / Lemon Squeezy / Polar product link (cards, PayPal, and UPI on Gumroad)
-  // upiUrl (optional): a Razorpay Payment Page link for Indian buyers paying by UPI
+  // ======== DOWNLOAD + PAYMENT SETTINGS — paste your links here ========
   window.NOVADOCK = {
-    checkoutUrl: "",
-    upiUrl: ""
+    // Free download: upload the installer to GitHub → novadock-site → Releases (file name must match)
+    freeUrl: "https://github.com/vikas-swami/novadock-site/releases/latest/download/NovaDock_0.1.0_x64-setup.exe",
+    // Pro checkout: your Dodo Payments (or Gumroad) payment link for "NovaDock Pro"
+    checkoutUrl: "https://checkout.dodopayments.com/buy/pdt_0NrqnhhYoS5XABSowkT3c?quantity=1&redirect_url=https://vikas-swami.github.io%2Fnovadock-site%2F%3Fpurchased%3D1"
   };
 </script>
 <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -107,15 +107,15 @@ html{scroll-behavior:smooth}
   <h1 class="hero-title" style="margin: 22px auto 0; max-width: 900px; font-size: 76px; line-height: 1.02; font-weight: 700">Your taskbar, reborn as a smart dock.</h1>
   <p style="margin: 22px auto 0; max-width: 640px; font-size: 20px; color: #a9adb9">A Mac-style dock, a clean menu bar and live widgets for your calendar, music, weather, system and your own business numbers. All in one glassy bar.</p>
   <div style="margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
-    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
-      Get NovaDock — $6.99
+    <a href="#pricing" data-free class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
+      Download free
     </a>
     <a href="#demo" class="btn btn-ghost" style="background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.12); padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
       Watch the demo
     </a>
   </div>
-  <p style="margin: 16px 0 0; font-size: 14px; color: #8a8f9c">One-time payment · Free updates · No account needed</p>
+  <p style="margin: 16px 0 0; font-size: 14px; color: #8a8f9c">Free download · Pro is a one-time $5.50 · No account needed</p>
 </section>
 
 <!-- DEMO -->
@@ -386,45 +386,25 @@ html{scroll-behavior:smooth}
 <section id="pricing" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
   <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 36px">
     <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Pricing</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Pay once. Keep it forever.</h2>
+    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Start free. Go Pro when you love it.</h2>
+    <p style="margin: 0; color: #a9adb9; font-size: 18px">Every download includes a 7-day Pro trial. No card needed.</p>
   </div>
-  <div style="max-width: 480px; margin: 0 auto; background: #11131a; border: 1px solid rgba(255,255,255,0.12); border-radius: 26px; padding: 36px; display: flex; flex-direction: column; gap: 22px; box-shadow: 0 30px 90px rgba(58,107,255,0.15)">
-    <div style="display: flex; justify-content: space-between; align-items: center">
-      <h3 style="margin: 0; font-size: 22px">NovaDock Lifetime</h3>
-      <span style="padding: 4px 12px; border-radius: 999px; background: rgba(91,140,255,0.16); color: #a9c0ff; font-size: 13px; font-weight: 600">Launch price</span>
+  <div class="g2" style="max-width: 920px; margin: 0 auto; align-items: stretch">
+    <div style="background: #11131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 26px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+      <h3 style="margin: 0; font-size: 22px">Free</h3>
+      <div style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 56px; font-weight: 700; line-height: 1">$0</div>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1"><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Mac-style dock with magnification</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Menu bar + Launchpad</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Clock, weather, system & battery widgets</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>2 themes, every dock position & size</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Free forever</span></li></ul>
+      <a href="#pricing" data-free class="btn btn-ghost" style="background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.16); padding: 14px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Download free for Windows</a>
     </div>
-    <div style="display: flex; align-items: baseline; gap: 12px">
-      <span style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 64px; font-weight: 700; line-height: 1">$6.99</span>
-      <span style="color: #8a8f9c; text-decoration: line-through; font-size: 22px">$14.99</span>
+    <div style="background: #11131a; border: 2px solid #3a6bff; border-radius: 26px; padding: 32px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 30px 90px rgba(58,107,255,0.2)">
+      <div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 22px">Pro</h3><span style="padding: 4px 12px; border-radius: 999px; background: #3a6bff; color: #fff; font-size: 13px; font-weight: 600">One-time</span></div>
+      <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 56px; font-weight: 700; line-height: 1">$5.50</span><span style="color: #8a8f9c">USD · lifetime</span></div>
+      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1"><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Everything in Free, plus:</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Calendar & meetings, Now Playing, Focus timer</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>To-do, Notes, World clock, Control Center</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Unlimited custom API widgets (sales, orders, prices)</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>All automations + Focus mode</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>All 9 themes + full appearance control</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Use on up to 3 PCs · free updates for life</span></li></ul>
+      <a href="#pricing" data-buy="card" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 15px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Get Pro — $5.50</a>
+      <p data-buy-note style="display: none; margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,159,10,0.12); color: #ffcf8a; font-size: 14px; text-align: center">Checkout opens soon. Payment link is not set up yet.</p>
     </div>
-    <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
-      
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Mac-style dock, menu bar and Launchpad</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>16 widgets + unlimited custom API widgets</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Calendar, music, weather and system panels</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Automations, focus mode and quiet hours</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>9 themes with real Acrylic / Mica blur</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Free updates for life</span></li>
-      
-
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>No account, no tracking</span></li>
-      
-    </ul>
-    <a href="#pricing" data-buy="card" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 15px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Buy now — $6.99</a>
-    <a href="#pricing" data-buy="upi" class="btn btn-ghost" style="display: none; background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.14); padding: 13px 24px; border-radius: 14px; font-weight: 600; font-size: 16px; text-align: center; min-height: 48px; align-items: center; justify-content: center">Pay with UPI (India)</a>
-    <p data-buy-note style="display: none; margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,159,10,0.12); color: #ffcf8a; font-size: 14px; text-align: center">Checkout opens soon. Payment links are not set up yet.</p>
-    <p style="margin: 0; text-align: center; color: #8a8f9c; font-size: 14px">Windows 10 &amp; 11 · 64-bit · Instant download after payment</p>
   </div>
+  <p style="margin: 22px 0 0; text-align: center; color: #8a8f9c; font-size: 14px">Windows 10 &amp; 11 · 64-bit · Secure checkout · Taxes handled for you · <a href="refunds.html">14-day refund</a></p>
 </section>
 
 <!-- FAQ -->
@@ -435,7 +415,7 @@ html{scroll-behavior:smooth}
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it work on Windows 10 and Windows 11?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes, on 64-bit Windows 10 and Windows 11. On Windows 10 the Mica effect falls back to Acrylic blur.</p></details>
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>What happens to my Windows taskbar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">You choose: hidden, auto-hide or always visible. When you quit NovaDock, the taskbar and your screen space go back exactly as they were. If something ever goes wrong, run "NovaDock.exe --restore-taskbar".</p></details>
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>How do I connect my Google, Outlook or iCloud calendar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Paste your calendar’s secret iCal link in Settings, under Calendar & Weather. It is read-only, and NovaDock fetches it directly from your PC. Nothing goes through our servers.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Is it a subscription?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. You pay once and keep NovaDock forever, including free updates.</p></details>
+<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Is it a subscription?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. NovaDock is free to download. Pro is a one-time $5.50 payment that you keep forever, with free updates. Every download starts with a 7-day Pro trial.</p></details>
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Can I put the dock on the left, right or top?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes. Choose bottom, left, right or top, as a floating pill or a full-width bar, with auto-hide if you want it out of the way.</p></details>
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it slow down my PC?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">NovaDock is a native Tauri app: a small installer and a light memory footprint. Fullscreen games and videos hide the dock automatically.</p></details>
 <details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Do you collect any data?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. There is no account and no telemetry. Your settings, notes and API keys stay in your own AppData folder.</p></details>
@@ -447,7 +427,7 @@ html{scroll-behavior:smooth}
   <div style="background: #11131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; padding: 64px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px">
     <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1; max-width: 720px">Give Windows the dock it always deserved.</h2>
     <p style="margin: 0; color: #a9adb9; font-size: 18px">Set up in under a minute. Quit any time, and the taskbar comes right back.</p>
-    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center">Get NovaDock — $6.99</a>
+    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center">Download free · Pro $5.50</a>
   </div>
 </section>
 
@@ -457,10 +437,10 @@ html{scroll-behavior:smooth}
     <span>© 2026 NovaDock. Made in India.</span>
     <div style="display: flex; gap: 22px; flex-wrap: wrap">
       <a href="#faq" style="color: #a9adb9">Help</a>
-      <a href="#privacy" style="color: #a9adb9">Privacy</a>
-      <a href="#terms" style="color: #a9adb9">Terms</a>
-      <a href="#refunds" style="color: #a9adb9">Refunds</a>
-      <a href="#contact" style="color: #a9adb9">Contact</a>
+      <a href="privacy.html" style="color: #a9adb9">Privacy</a>
+      <a href="terms.html" style="color: #a9adb9">Terms</a>
+      <a href="refunds.html" style="color: #a9adb9">Refunds</a>
+      <a href="mailto:[SUPPORT EMAIL]" style="color: #a9adb9">Contact</a>
     </div>
   </div>
 </footer>
@@ -470,18 +450,24 @@ html{scroll-behavior:smooth}
 <script>
 (function () {
   var cfg = window.NOVADOCK || {};
+  document.querySelectorAll('[data-free]').forEach(function (a) { if (cfg.freeUrl) a.href = cfg.freeUrl; });
   var card = document.querySelector('[data-buy="card"]');
-  var upi = document.querySelector('[data-buy="upi"]');
   var note = document.querySelector('[data-buy-note]');
   if (cfg.checkoutUrl) {
     card.href = cfg.checkoutUrl;
-    if (/gumroad\.com|gum\.co/.test(cfg.checkoutUrl)) {
-      var g = document.createElement('script'); g.src = 'https://gumroad.com/js/gumroad.js'; document.body.appendChild(g);
-    } else { card.target = '_blank'; card.rel = 'noopener'; }
+    if (/gumroad\.com|gum\.co/.test(cfg.checkoutUrl)) { var g = document.createElement('script'); g.src = 'https://gumroad.com/js/gumroad.js'; document.body.appendChild(g); }
+    else { card.target = '_blank'; card.rel = 'noopener'; }
   } else {
     card.addEventListener('click', function (e) { e.preventDefault(); note.style.display = 'block'; });
   }
-  if (cfg.upiUrl) { upi.href = cfg.upiUrl; upi.target = '_blank'; upi.rel = 'noopener'; upi.style.display = 'flex'; }
+  if (/[?&]purchased=1/.test(location.search)) {
+    var b = document.createElement('div');
+    b.setAttribute('role', 'status');
+    b.style.cssText = 'position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:9999;max-width:560px;width:calc(100% - 32px);padding:16px 44px 16px 18px;border-radius:14px;background:#0f2a1a;border:1px solid #2fbf63;color:#d9ffe6;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)';
+    b.innerHTML = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>Your license key is on its way to your email. Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don’t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.<button aria-label="Close" style="position:absolute;right:10px;top:8px;background:none;border:0;color:#d9ffe6;font-size:22px;cursor:pointer">&times;</button>';
+    b.querySelector('button').onclick = function () { b.remove(); };
+    document.body.appendChild(b);
+  }
 })();
 </script>
 </body>
