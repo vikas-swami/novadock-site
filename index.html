@@ -468,7 +468,7 @@ html{scroll-behavior:smooth}
     var kind, html;
     if (status === 'succeeded') {
       kind = 'ok';
-      html = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>Your license key is on its way to your email. Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don\u2019t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.';
+      html = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>' + (q.get('license_key') ? 'Your license key: <code style="user-select:all;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px;color:#fff">' + q.get('license_key').replace(/[^A-Za-z0-9_,-]/g, '') + '</code> (also sent to your email). ' : 'Your license key is on its way to your email. ') + 'Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don\u2019t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.';
     } else if (status === 'processing' || status.indexOf('requires') === 0) {
       kind = 'wait';
       html = '<strong style="color:#fff">Your payment is still processing.</strong><br>Once it is confirmed, your license key will be emailed to you. If nothing arrives within an hour, contact us from the link at the bottom of this page.';
