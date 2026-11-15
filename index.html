@@ -461,12 +461,32 @@ html{scroll-behavior:smooth}
     card.addEventListener('click', function (e) { e.preventDefault(); note.style.display = 'block'; });
   }
   if (/[?&]purchased=1/.test(location.search)) {
+    // Dodo adds ?status=... to the return URL. Only a "succeeded" payment gets the thank-you.
+    var q = new URLSearchParams(location.search);
+    var status = (q.get('status') || '').toLowerCase();
+    var buyUrl = cfg.checkoutUrl || '#pricing';
+    var kind, html;
+    if (status === 'succeeded') {
+      kind = 'ok';
+      html = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>Your license key is on its way to your email. Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don\u2019t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.';
+    } else if (status === 'processing' || status.indexOf('requires') === 0) {
+      kind = 'wait';
+      html = '<strong style="color:#fff">Your payment is still processing.</strong><br>Once it is confirmed, your license key will be emailed to you. If nothing arrives within an hour, contact us from the link at the bottom of this page.';
+    } else if (status) {
+      kind = 'fail';
+      html = '<strong style="color:#fff">Payment didn\u2019t go through.</strong><br>You have not been charged and no license was created. <a href="' + buyUrl + '" style="color:#ffb3b3">Try again</a> with another card or payment method.';
+    } else {
+      kind = 'wait';
+      html = '<strong style="color:#fff">Welcome back!</strong><br>If your payment was completed, your license key is on its way to your email.';
+    }
+    var colors = { ok: ['#0f2a1a', '#2fbf63', '#d9ffe6'], wait: ['#2a230f', '#d4a72c', '#fff3d6'], fail: ['#2a0f12', '#e5484d', '#ffe1e1'] }[kind];
     var b = document.createElement('div');
-    b.setAttribute('role', 'status');
-    b.style.cssText = 'position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:9999;max-width:560px;width:calc(100% - 32px);padding:16px 44px 16px 18px;border-radius:14px;background:#0f2a1a;border:1px solid #2fbf63;color:#d9ffe6;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)';
-    b.innerHTML = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>Your license key is on its way to your email. Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don’t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.<button aria-label="Close" style="position:absolute;right:10px;top:8px;background:none;border:0;color:#d9ffe6;font-size:22px;cursor:pointer">&times;</button>';
+    b.setAttribute('role', kind === 'fail' ? 'alert' : 'status');
+    b.style.cssText = 'position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:9999;max-width:560px;width:calc(100% - 32px);padding:16px 44px 16px 18px;border-radius:14px;background:' + colors[0] + ';border:1px solid ' + colors[1] + ';color:' + colors[2] + ';font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.4)';
+    b.innerHTML = html + '<button aria-label="Close" style="position:absolute;right:10px;top:8px;background:none;border:0;color:inherit;font-size:22px;cursor:pointer">&times;</button>';
     b.querySelector('button').onclick = function () { b.remove(); };
     document.body.appendChild(b);
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
   }
 })();
 </script>
