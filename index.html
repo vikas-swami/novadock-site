@@ -12,6 +12,8 @@
 <script>
   // ======== DOWNLOAD + PAYMENT SETTINGS — paste your links here ========
   window.NOVADOCK = {
+    // Privacy-friendly visit counter (no cookies): your GoatCounter code, e.g. "novadock" for novadock.goatcounter.com. Empty = off.
+    goatcounter: "",
     // Free download: upload the installer to GitHub → novadock-site → Releases (file name must match)
     freeUrl: "download/NovaDock_0.1.0_x64-setup.exe",
     // Pro checkout: your Dodo Payments (or Gumroad) payment link for "NovaDock Pro"
@@ -464,6 +466,7 @@ html{scroll-behavior:smooth}
     // Dodo adds ?status=... to the return URL. Only a "succeeded" payment gets the thank-you.
     var q = new URLSearchParams(location.search);
     var status = (q.get('status') || '').toLowerCase();
+    window.__ndCheckoutStatus = status || 'unknown';
     var buyUrl = cfg.checkoutUrl || '#pricing';
     var kind, html;
     if (status === 'succeeded') {
@@ -487,6 +490,32 @@ html{scroll-behavior:smooth}
     b.querySelector('button').onclick = function () { b.remove(); };
     document.body.appendChild(b);
     try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+  }
+})();
+</script>
+<script>
+/* Cookie-free page and click counts via GoatCounter (only when a code is set above). */
+(function () {
+  var code = (window.NOVADOCK || {}).goatcounter;
+  if (!code) return;
+  window.goatcounter = { no_onload: false };
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://' + code + '.goatcounter.com/count');
+  document.head.appendChild(s);
+  function track(name) {
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    if (a.hasAttribute('data-free')) track('download-click');
+    else if (a.getAttribute('data-buy') === 'card') track('buy-pro-click');
+  }, true);
+  if (window.__ndCheckoutStatus) {
+    var st = window.__ndCheckoutStatus.replace(/[^a-z_]/g, '');
+    window.addEventListener('load', function () { setTimeout(function () { track('checkout-' + st); }, 500); });
   }
 })();
 </script>
