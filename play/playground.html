@@ -81,6 +81,15 @@
 <script>
 (function () {
   const desk = document.getElementById("desk");
+  // The page can run this before the playground has a size (iframe still laying
+  // out, background tab, slow load). Wait until the desktop area is measurable.
+  if (desk.clientWidth < 50 || desk.clientHeight < 50) {
+    const ro = new ResizeObserver(() => {
+      if (desk.clientWidth >= 50 && desk.clientHeight >= 50) { ro.disconnect(); boot(); }
+    });
+    ro.observe(desk);
+  } else boot();
+  function boot() {
   const W = desk.clientWidth, H = desk.clientHeight;
   const frames = { menubar: f("menubar"), dock: f("dock"), panel: f("panel"), settings: f("settings") };
   function f(n) { return document.getElementById("f-" + n); }
@@ -226,6 +235,7 @@
     if (document.activeElement !== size) size.value = cfg.dock.iconSize;
   }
   layoutMenubar(); syncControls();
+  }
 })();
 </script>
 </body>
