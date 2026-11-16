@@ -49,7 +49,7 @@ nav{height:56px;display:flex;align-items:center;justify-content:space-between}
 .links{display:flex;gap:26px;font-size:14px;color:#b4b4bb}.links a:hover{color:#fff}
 nav .btn{height:34px;padding:0 16px;font-size:14px}
 /* hero */
-.hero{position:relative;height:min(calc(100vh - 56px),calc(62vw + 300px));height:min(calc(100svh - 56px),calc(62vw + 300px));min-height:740px;max-height:1100px;background:#000 url(assets/hero-wall.jpg) center bottom/cover no-repeat;overflow:hidden}
+.hero{position:relative;height:min(calc(100vh - 96px),calc(62vw + 300px));height:min(calc(100svh - 96px),calc(62vw + 300px));min-height:740px;max-height:1100px;background:#000 url(assets/hero-wall.jpg) center bottom/cover no-repeat;overflow:hidden}
 .hero iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;z-index:1}
 .hero-text{position:absolute;left:0;right:0;top:clamp(84px,17%,200px);z-index:2;text-align:center;pointer-events:none;transition:opacity .25s,transform .25s;padding:0 20px}
 .hero-text.away{opacity:0;transform:translateY(-10px)}
@@ -166,9 +166,18 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
 @media (min-width:721px) and (max-height:820px){.hero-hint{display:none}}
 @media (min-width:721px) and (max-width:1100px){.hero-text p{font-size:17px;max-width:540px}}
 @media (max-width:380px){.btn{padding-left:18px;padding-right:18px}.live-pill{font-size:13px}}
+.bf-bar{position:relative;z-index:60;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:9px 16px;background:linear-gradient(90deg,#000,#1a1a1a 30%,#000);border-bottom:1px solid rgba(255,214,10,.35);color:#f5f5f7;font-size:14px;text-decoration:none;text-align:center}
+.bf-bar b{color:#ffd60a;letter-spacing:.02em}
+.bf-cd{font-variant-numeric:tabular-nums;padding:2px 8px;border-radius:6px;background:rgba(255,214,10,.14);color:#ffd60a;font-weight:600}
+.bf-go{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.bf-badge{background:rgba(255,214,10,.16)!important;color:#ffd60a!important;border-color:rgba(255,214,10,.4)!important}
+.bf-later{margin:-4px 0 10px;color:#ffd60a;font-size:15px}
+.bf-later b{font-weight:700}
+@media (max-width:720px){.bf-bar{font-size:13px;gap:6px;padding:8px 10px}.bf-go{display:none}}
 </style>
 </head>
 <body>
+<a class="bf-bar" href="#pricing"><b>BLACK FRIDAY</b> Launch price <b>$5.50</b> — goes up to $15 on Dec 1 <span class="bf-cd" data-bf-cd></span><span class="bf-go">Get it →</span></a>
 <header>
   <nav class="wrap">
     <a class="logo" href="#"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></i>NovaDock</a>
@@ -272,9 +281,10 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
     <span class="kicker">Pricing</span>
     <h2 class="title"><span class="g">One price.</span><br>Yours forever.</h2>
     <div class="price">
-      <span class="badge">14-day money-back guarantee</span>
+      <span class="badge bf-badge">Black Friday launch price</span>
       <div class="amount">$5.50<small>once</small></div>
-      <div style="color:var(--dim);font-size:14px">About ₹520 · lifetime license · no subscription</div>
+      <div class="bf-later">Price goes up to <b>$15</b> on Dec 1 · <span data-bf-cd></span></div>
+      <div style="color:var(--dim);font-size:14px">About ₹520 · lifetime license · no subscription · 14-day money-back guarantee</div>
       <ul>
         <li>Dock, menu bar and Launchpad</li>
         <li>AI Assistant — Gemini, ChatGPT, Claude, Groq</li>
@@ -431,6 +441,21 @@ window.addEventListener('message', function (e) {
     var st = window.__ndCheckoutStatus.replace(/[^a-z_]/g, '');
     window.addEventListener('load', function () { setTimeout(function () { track('checkout-' + st); }, 500); });
   }
+})();
+</script>
+
+<script>
+(function () {
+  // Launch price ends at the start of Dec 1 (India time); after that the bar hides itself.
+  var end = new Date('2026-12-01T00:00:00+05:30').getTime();
+  function tick() {
+    var ms = end - Date.now();
+    if (ms <= 0) { document.querySelectorAll('.bf-bar,.bf-later').forEach(function (e) { e.style.display = 'none'; }); return; }
+    var d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+    var t = (d ? d + 'd ' : '') + String(h).padStart(2, '0') + 'h ' + String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's left';
+    document.querySelectorAll('[data-bf-cd]').forEach(function (e) { e.textContent = t; });
+  }
+  tick(); setInterval(tick, 1000);
 })();
 </script>
 </body>
