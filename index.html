@@ -338,8 +338,10 @@ window.addEventListener('message', function (e) {
   var ua = navigator.userAgent || '';
   var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
   var isWin = /Windows/i.test(ua) && !mobile;
-  document.documentElement.classList.add(isWin ? 'is-win' : 'not-win');
+  document.documentElement.classList.add(mobile ? 'not-win' : 'is-win');
   window.__ndPlatform = isWin ? 'win' : (mobile ? 'mobile' : 'other');
+  // Desktops that aren't Windows (Mac, Linux) open the Store page in the browser.
+  var storeWeb = 'https://apps.microsoft.com/detail/9N13CW1WM4K6';
   var pageUrl = 'https://novadock.online/';
   function toast(t) { var d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(function () { d.remove(); }, 3200); }
   function sendToPc(e) {
@@ -352,6 +354,7 @@ window.addEventListener('message', function (e) {
   document.querySelectorAll('[data-free]').forEach(function (a) {
     if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
     else if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
+    else if (!mobile) { a.href = storeWeb; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
     else {
       a.setAttribute('data-kind', 'send');
       a.lastChild.textContent = a.closest('.price') ? 'Send the link to my PC' : (a.closest('nav') ? 'Send to my PC' : 'Send to my PC');
