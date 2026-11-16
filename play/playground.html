@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
 <title>NovaDock Playground — try it in your browser</title>
 <style>
   * { box-sizing: border-box; }
@@ -48,10 +49,16 @@
   #toast.on { opacity: 1; transform: translateX(-50%); }
   #hint { text-align: center; color: #9aa0ad; font-size: 13px; padding: 0 16px 8px; }
   #mobile { display: none; padding: 40px 24px; text-align: center; color: #c4c7d1; }
+  /* Hero mode (?hero=1): edge-to-edge desktop for the website's first screen, no toolbar or demo window. */
+  html.hero, html.hero body { height: 100%; overflow: hidden; background: transparent !important; }
+  html.hero .bar, html.hero #hint, html.hero .win { display: none; }
+  html.hero #stage { padding: 0; height: 100%; }
+  html.hero #desk { max-width: none; height: 100vh; border-radius: 0; border: 0; box-shadow: none; background-color: transparent; }
   @media (max-width: 640px) { #stage, .bar, #hint { display: none; } #mobile { display: block; } }
 </style>
 </head>
 <body>
+  <script>if (/[?&]hero=1/.test(location.search)) document.documentElement.classList.add("hero");</script>
   <div class="bar">
     <div class="group" id="themes"><span>Theme</span></div>
     <div class="group" id="positions"><span>Dock</span></div>
@@ -102,7 +109,8 @@
   };
   let cfg = null, theme = "glass";
   const src = (w) => `index.html?wall=0&embed=1&w=${w}&preset=glass&sw=${W}&sh=${H}`;
-  desk.style.backgroundImage = "url(assets/wall-dark.jpg)";
+  const HERO = document.documentElement.classList.contains("hero");
+  desk.style.backgroundImage = HERO ? "none" : "url(assets/wall-dark.jpg)";
   frames.menubar.src = src("menubar");
   frames.dock.src = src("dock");
   frames.panel.src = src("panel");
@@ -149,6 +157,7 @@
     wrap.classList.remove("on"); lpBack.classList.remove("on");
     panel.visible = false; panel.hiddenAt = Date.now(); panel.lastKind = panel.kind; panel.kind = null;
     relay({ type: "panel-state" });
+    if (HERO) try { window.parent.postMessage({ ndHero: "panel", open: false }, "*"); } catch (e) {}
   }
   function showPanel(m) {
     if (panel.visible && panel.kind === m.kind) return hidePanel();
@@ -170,10 +179,12 @@
     panel.visible = true; panel.kind = m.kind;
     lpBack.classList.toggle("on", m.kind === "launchpad");
     requestAnimationFrame(() => wrap.classList.add("on"));
+    if (HERO) try { window.parent.postMessage({ ndHero: "panel", open: true }, "*"); } catch (e) {}
   }
   // Losing focus to another frame or the desktop closes the panel, like the real app.
   window.addEventListener("blur", () => setTimeout(() => { if (document.activeElement !== frames.panel) hidePanel(); }, 0));
   document.querySelector(".bar").addEventListener("mousedown", () => hidePanel());
+  if (HERO) document.addEventListener("mousedown", (e) => { if (e.target === document.documentElement || e.target === document.body || e.target.id === "stage") hidePanel(); });
   desk.addEventListener("mousedown", (e) => { if (e.target === desk || e.target.closest(".win") || e.target === lpBack) hidePanel(); });
   window.addEventListener("keydown", (e) => { if (e.key === "Escape") { hidePanel(); closeSettings(); } });
 

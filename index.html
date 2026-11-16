@@ -3,465 +3,368 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NovaDock — a smart Mac-style dock for Windows</title>
-<meta name="description" content="NovaDock turns the Windows taskbar into a Mac-style dock and menu bar with live widgets: calendar, music, weather, system stats and your own business numbers. One-time payment.">
-<meta property="og:title" content="NovaDock — a smart dock for Windows">
-<meta property="og:description" content="Mac-style dock, menu bar and live widgets for Windows 10 & 11.">
-<meta property="og:image" content="assets/hero.jpg">
-<meta name="theme-color" content="#07080d">
+<title>NovaDock — Goodbye, taskbar. A smart dock for Windows</title>
+<meta name="description" content="NovaDock replaces the Windows taskbar with a Mac-style dock, a menu bar and live widgets — calendar, music, weather, crypto and an AI assistant. Install free from the Microsoft Store, then $5.50 once.">
+<meta property="og:title" content="NovaDock — Goodbye, taskbar.">
+<meta property="og:description" content="A smart dock, menu bar and AI widgets for Windows 10 & 11. $5.50 once, 14-day money-back guarantee.">
+<meta property="og:image" content="https://novadock.online/assets/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
 <script>
-  // ======== DOWNLOAD + PAYMENT SETTINGS — paste your links here ========
   window.NOVADOCK = {
-    // Privacy-friendly visit counter (no cookies): your GoatCounter code, e.g. "novadock" for novadock.goatcounter.com. Empty = off.
     goatcounter: "novadock",
-    // Free download: upload the installer to GitHub → novadock-site → Releases (file name must match)
-    freeUrl: "download/NovaDock_0.1.0_x64-setup.exe",
-    // Pro checkout: your Dodo Payments (or Gumroad) payment link for "NovaDock Pro"
+    freeUrl: "download/NovaDock_0.1.2_x64-setup.exe",
+    storeUrl: "https://apps.microsoft.com/detail/9N13CW1WM4K6?mode=direct",
     checkoutUrl: "https://checkout.dodopayments.com/buy/pdt_0NrqnhhYoS5XABSowkT3c?quantity=1&redirect_url=https%3A%2F%2Fnovadock.online%2F%3Fpurchased%3D1"
   };
 </script>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#07080d}
-a{color:#8fb0ff;text-decoration:none}a:hover{color:#c3d3ff}
-.nd *{box-sizing:border-box}
-.nd h1,.nd h2,.nd h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;letter-spacing:-0.02em}
-.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
-.span4{grid-column:span 4}.span2{grid-column:span 2}.span3{grid-column:span 3}
-.navlinks{display:flex;gap:28px;align-items:center}
-.btn{transition:transform .15s ease, background .15s ease}
+:root{--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);--dim:#9b9ba3;--dim2:#6e6e76;--card:#0d0d10}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#000;color-scheme:dark}
+body{margin:0;background:#000;color:#f5f5f7;font:16px/1.55 Inter,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.035em;line-height:1.04}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+section{padding:140px 0 0}
+.kicker{display:block;text-align:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim2);margin-bottom:16px}
+.title{text-align:center;font-size:56px}
+.title .g{color:#76767e}
+.sub{text-align:center;color:var(--dim);font-size:18px;max-width:600px;margin:18px auto 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:46px;padding:0 24px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s,background .15s,opacity .15s;white-space:nowrap}
 .btn:hover{transform:translateY(-1px)}
-.btn-primary:hover{background:#5481ff !important}
-.btn-ghost:hover{background:rgba(255,255,255,0.1) !important}
-.faq-q:hover{background:rgba(255,255,255,0.04) !important}
-.shot{transition:transform .3s ease}
-.shot:hover{transform:translateY(-4px)}
-@media (max-width: 960px){
-  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .span4,.span3,.span2{grid-column:span 2}
+.btn-w{background:#fff;color:#000}.btn-w:hover{background:#e6e6ea}
+.btn-d{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line2);backdrop-filter:blur(12px)}.btn-d:hover{background:rgba(255,255,255,.14)}
+/* nav */
+header{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.72);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--line)}
+nav{height:56px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.logo i{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#5b7cff,#9b6bff);display:grid;place-items:center}
+.links{display:flex;gap:26px;font-size:14px;color:#b4b4bb}.links a:hover{color:#fff}
+nav .btn{height:34px;padding:0 16px;font-size:14px}
+/* hero */
+.hero{position:relative;height:calc(100vh - 56px);min-height:620px;max-height:1100px;background:#000 url(assets/hero-wall.jpg) center bottom/cover no-repeat;overflow:hidden}
+.hero iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;z-index:1}
+.hero-text{position:absolute;left:0;right:0;top:20%;z-index:2;text-align:center;pointer-events:none;transition:opacity .25s,transform .25s;padding:0 20px}
+.hero-text.away{opacity:0;transform:translateY(-10px)}
+.hero-text h1{font-size:88px;font-weight:600}
+.hero-text h1 .g{color:#8a8a94}
+.hero-text p{color:#c2c2c9;font-size:19px;margin:22px auto 0;max-width:620px}
+.hero-cta{margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;pointer-events:auto}
+.hero-note{margin-top:14px;color:#8c8c94;font-size:13px}
+.hero-hint{position:absolute;z-index:2;left:50%;bottom:118px;transform:translateX(-50%);font-size:12.5px;color:rgba(255,255,255,.55);pointer-events:none;white-space:nowrap;transition:opacity .25s}
+.hero-mobile{display:none}
+.live-pill{display:inline-flex;align-items:center;gap:9px;margin-bottom:22px;padding:7px 14px 7px 12px;border-radius:999px;background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.45);color:#d9ffe6;font-size:14px;font-weight:600;text-decoration:none;backdrop-filter:blur(10px)}
+.live-pill i{width:8px;height:8px;border-radius:50%;background:#30d158;box-shadow:0 0 0 0 rgba(48,209,88,.7);animation:livep 1.8s infinite}
+.live-pill span{opacity:.7;transition:transform .2s}.live-pill:hover span{transform:translateX(3px)}
+@keyframes livep{0%{box-shadow:0 0 0 0 rgba(48,209,88,.7)}70%{box-shadow:0 0 0 8px rgba(48,209,88,0)}100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}}
+.pc-note{display:none;margin:16px auto 0;max-width:380px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid var(--line2);color:#d8d8de;font-size:14px;line-height:1.45}
+.not-win .pc-note{display:block}.not-win [data-note-win]{display:none}
+.store-badge{display:none;margin:14px auto 0;width:fit-content}.store-badge img{display:block;height:56px;width:auto}
+.is-win .store-badge{display:block}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;background:#1c1c20;border:1px solid var(--line2);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+/* big shot */
+.shot{margin:56px auto 0;max-width:1080px;border-radius:22px;overflow:hidden;border:1px solid var(--line)}
+.stage{margin:56px auto 0;max-width:1080px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(90% 90% at 50% 100%,rgba(70,90,255,.25),transparent 70%),#07070a;display:flex;justify-content:center;gap:28px;padding:56px 28px 0;overflow:hidden;flex-wrap:wrap}
+.stage img{border-radius:20px 20px 0 0;box-shadow:0 30px 80px rgba(0,0,0,.7);align-self:flex-end}
+.pills{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;margin-top:26px;color:var(--dim2);font-size:13.5px}
+/* gallery */
+.cat{margin-top:46px}
+.cat h4{margin:0 0 14px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim2);font-weight:500}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:border-color .2s,transform .2s}
+.tile:hover{border-color:var(--line2);transform:translateY(-3px)}
+.tile .pic{height:220px;display:flex;justify-content:center;padding:22px 22px 0;background:linear-gradient(180deg,#141418,#0b0b0e);overflow:hidden}
+.tile .pic img{width:72%;border-radius:14px 14px 0 0;object-fit:cover;object-position:top;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.tile .cap{padding:16px 18px 18px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.tile .cap b{font-weight:600;font-size:15px}
+.tile .cap span{color:var(--dim2);font-size:13px;text-align:right}
+.new{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:#9fb2ff;margin-left:6px}
+.more{text-align:center;margin-top:28px;color:var(--dim);font-size:14.5px}
+/* moving docks */
+.marquees{margin-top:60px;display:flex;flex-direction:column;gap:34px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mq{position:relative}
+.mq-label{display:block;text-align:center;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim2);margin-bottom:12px}
+.mq-track{display:flex;gap:26px;width:max-content;animation:mq var(--d,45s) linear infinite}
+.mq.rev .mq-track{animation-direction:reverse}
+.mq:hover .mq-track{animation-play-state:paused}
+.mq-track img{height:71px;width:auto;flex:none;border-radius:22px}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(calc((100% + 26px) / -4))}}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}}
+@media (max-width:720px){.mq-track img{height:52px}.marquees{gap:24px}}
+.wl{margin-top:44px;text-align:center;border-bottom:0}
+.wl summary{display:inline-flex;list-style:none;cursor:pointer;padding:10px 20px;border-radius:999px;border:1px solid var(--line2);font-size:14.5px;font-weight:500;color:#e6e6ea}
+.wl summary::-webkit-details-marker{display:none}
+.wl summary:after{content:none}
+.wl[open] summary{background:rgba(255,255,255,.06)}
+.wl-grid{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:left;align-items:start}
+.wl-cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.wl-cat h4{margin:0 0 8px;font-size:14px;font-weight:600}.wl-cat h4 span{color:var(--dim2);font-weight:400;margin-left:4px}
+.wl-cat p{margin:0;padding:0;color:var(--dim);font-size:13.5px;line-height:1.7}
+.wl .more{padding:0;margin-top:22px}
+@media (max-width:900px){.wl-grid{grid-template-columns:1fr}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:52px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 22px;text-align:center}
+.stat b{display:block;font-size:44px;font-weight:600;letter-spacing:-.04em;line-height:1.05}
+.stat span{display:block;margin-top:8px;color:var(--dim);font-size:13.5px;line-height:1.45}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+/* features 3 */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px}
+.f{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
+.f h3{font-size:19px;margin:14px 0 8px;letter-spacing:-.02em}
+.f p{margin:0;color:var(--dim);font-size:14.5px}
+.f svg{opacity:.85}
+/* pricing */
+.price{margin:56px auto 0;max-width:520px;background:var(--card);border:1px solid var(--line2);border-radius:28px;padding:40px 40px 34px;text-align:center;position:relative;overflow:hidden}
+.price:before{content:"";position:absolute;inset:auto -20% -60% -20%;height:70%;background:radial-gradient(closest-side,rgba(80,100,255,.28),transparent);pointer-events:none}
+.price>*{position:relative}
+.badge{display:inline-block;font-size:12.5px;color:#cfd3ff;border:1px solid rgba(140,150,255,.35);border-radius:999px;padding:5px 12px}
+.amount{font-size:84px;font-weight:600;letter-spacing:-.05em;line-height:1;margin:22px 0 4px}
+.amount small{font-size:18px;color:var(--dim);font-weight:400;letter-spacing:0;margin-left:6px}
+.price ul{list-style:none;padding:0;margin:26px 0 28px;text-align:left;display:grid;gap:11px;font-size:14.5px;color:#d6d6dc}
+.price li{display:flex;gap:10px}
+.price li:before{content:"✓";color:#9fb2ff;font-weight:700}
+.price .btn{width:100%}
+.price .btn+.btn{margin-top:10px}
+.fine{color:var(--dim2);font-size:12.5px;margin-top:16px}
+/* faq */
+.faq{max-width:760px;margin:46px auto 0}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:20px 4px;font-weight:500;font-size:16.5px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--dim);font-size:22px;line-height:1;transition:transform .2s}
+details[open] summary:after{transform:rotate(45deg)}
+details p{margin:0;padding:0 4px 20px;color:var(--dim);font-size:15px}
+/* end */
+.end{margin-top:150px;text-align:center;padding:120px 20px 300px;background:#000 url(assets/hero-wall.jpg) center top/max(100%,1500px) auto no-repeat;border-top:1px solid var(--line)}
+.end h2{font-size:60px}
+footer{border-top:1px solid var(--line);padding:30px 0 46px;color:var(--dim2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
+@media (max-width:980px){.hero-text h1{font-size:68px}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:1fr}}
+@media (max-width:720px){
+  .links{display:none}
+  .hero{height:auto;min-height:0;max-height:none;padding:70px 0 0;background-size:220% auto}
+  .hero iframe,.hero-hint{display:none}
+  .hero-text{position:static}
+  .hero-text h1{font-size:46px}.hero-text p{font-size:17px}
+  .hero-mobile{display:block;margin:44px 16px 0;border-radius:16px 16px 0 0;overflow:hidden;border:1px solid var(--line2);border-bottom:0}
+  .title,.end h2{font-size:38px}
+  .row{grid-template-columns:1fr}
+  section{padding-top:100px}
+  .stage{padding:30px 16px 0}
+  .price{padding:30px 24px}
 }
-.hero-img{display:none}
-@media (max-width: 700px){ .try-frame{display:none !important} .hero-img{display:block} }
-@media (max-width: 640px){
-  .g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
-  .navlinks{display:none}
-  .hero-title{font-size:44px !important}
-  .sec-title{font-size:34px !important}
-  .wrap{padding-left:20px !important;padding-right:20px !important}
-}
-
-details.faq summary::-webkit-details-marker{display:none}
-details.faq[open] .sign{transform:rotate(45deg)}
-.sign{transition:transform .2s ease;display:inline-block}
-html{scroll-behavior:smooth}
 </style>
 </head>
 <body>
-<div class="nd" style="width: 100%; min-height: 100%; background: #07080d; color: #f4f5f8; font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.55">
-
-<!-- NAV -->
-<header style="position: sticky; top: 0; z-index: 20; background: rgba(7,8,13,0.82); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.07)">
-  <nav class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
-    <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #f4f5f8; font-family: 'Space Grotesk', Inter, sans-serif; font-weight: 700; font-size: 19px">
-      <span style="width: 32px; height: 32px; border-radius: 9px; background: #3a6bff; display: grid; place-items: center">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"></path></svg>
-      </span>
-      NovaDock
-    </a>
-    <div class="navlinks" style="font-size: 15px">
-      <a href="#try" style="color: #c4c7d1">Try it</a>
-      <a href="#features" style="color: #c4c7d1">Features</a>
-      <a href="#widgets" style="color: #c4c7d1">Widgets</a>
-      <a href="#themes" style="color: #c4c7d1">Themes</a>
-      <a href="#pricing" style="color: #c4c7d1">Pricing</a>
-      <a href="#faq" style="color: #c4c7d1">FAQ</a>
-    </div>
-    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 10px 18px; border-radius: 999px; font-weight: 600; font-size: 15px; min-height: 44px; display: inline-flex; align-items: center">Get NovaDock</a>
+<header>
+  <nav class="wrap">
+    <a class="logo" href="#"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></i>NovaDock</a>
+    <div class="links"><a href="#ai">AI</a><a href="#widgets">Widgets</a><a href="#looks">Themes</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
+    <a class="btn btn-w" href="#pricing" data-free>Get NovaDock</a>
   </nav>
 </header>
 
-<!-- PLAYGROUND (first thing visitors see) -->
-<section class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 14px 20px 0">
-  <div id="try">
-    <div class="try-frame" style="border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: #07080d; box-shadow: 0 40px 120px rgba(58,107,255,0.18), 0 20px 60px rgba(0,0,0,0.6)">
-      <iframe src="play/playground.html" title="NovaDock live playground" style="display: block; width: 100%; height: calc(100vh - 96px); min-height: 640px; max-height: 1000px; border: 0"></iframe>
+<!-- HERO: the real NovaDock running live on a desktop -->
+<div class="hero" id="hero">
+  <iframe src="play/playground.html?hero=1" title="NovaDock running live — hover the dock and click the widgets" loading="eager"></iframe>
+  <div class="hero-text" id="heroText">
+    <a class="live-pill" href="https://apps.microsoft.com/detail/9N13CW1WM4K6" target="_blank" rel="noopener" data-store-pill><i></i>Now live on the Microsoft Store<span>→</span></a>
+    <h1><span class="g">Goodbye, taskbar.</span><br>Hello, smart dock.</h1>
+    <p>A Mac-style dock, a clean menu bar and 110 live widgets — with an AI assistant built in. For Windows 10 &amp; 11.</p>
+    <div class="hero-cta">
+      <a class="btn btn-w" href="#pricing" data-free><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Get NovaDock</a>
+      <a class="btn btn-d" href="#pricing" data-buy="card">Buy lifetime · $5.50</a>
     </div>
-    <p class="try-frame" style="margin: 12px 0 0; font-size: 14px; color: #8a8f9c; text-align: center">Live demo, not a video. Hover over the dock, click the widgets, switch themes. <a href="play/playground.html" target="_blank" rel="noopener">Open full screen →</a></p>
-    <div class="hero-img" style="border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1)">
-      <img src="assets/hero.jpg" alt="NovaDock on a Windows desktop: menu bar at the top, glass dock at the bottom and the calendar panel open" style="display: block; width: 100%; height: auto">
+    <div class="hero-note" data-note-win>One-time $5.50 · 14-day money-back guarantee · Try it live right here ↓</div>
+    <div class="pc-note" data-note-mobile>💻 NovaDock is a Windows app. Send this link to your PC and install it there.</div>
+  </div>
+  <div class="hero-hint" id="heroHint">This is live — hover the dock and click any widget ↓</div>
+  <div class="hero-mobile"><img src="assets/hero.jpg" alt="NovaDock on a Windows desktop with the menu bar at the top and the glass dock at the bottom"></div>
+</div>
+
+<!-- AI -->
+<section id="ai">
+  <div class="wrap">
+    <span class="kicker">New · AI Assistant</span>
+    <h2 class="title"><span class="g">Ask anything.</span><br>Right from your dock.</h2>
+    <p class="sub">Click the AI icon and chat without opening a browser. “Plan my day” reads your calendar, to-dos and weather and gives you a calm plan.</p>
+    <div class="stage">
+      <img src="assets/ai-chat.png" alt="NovaDock AI Assistant answering “Plan my day”" style="width:min(360px,100%)">
     </div>
+    <div class="pills"><span>Google Gemini — free key</span><span>Groq — free key</span><span>ChatGPT</span><span>Claude</span><span>Your key stays on your PC</span></div>
   </div>
 </section>
 
-<!-- HERO -->
-<section id="top" class="wrap" style="max-width: 1440px; margin: 0 auto; padding: 72px 32px 40px; text-align: center">
-  <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); color: #c4c7d1; font-size: 14px">
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="0" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="0" width="7.4" height="7.4" rx="1"></rect><rect x="0" y="8.6" width="7.4" height="7.4" rx="1"></rect><rect x="8.6" y="8.6" width="7.4" height="7.4" rx="1"></rect></svg>
-    For Windows 10 &amp; 11
+<!-- WIDGETS: moving docks -->
+<section id="widgets">
+  <div class="wrap">
+    <span class="kicker">110 widgets</span>
+    <h2 class="title"><span class="g">A widget for</span><br>everything you check.</h2>
+    <p class="sub">Your day, your numbers, your music and your PC — live in the dock. Click any of them for the full view.</p>
   </div>
-  <h1 class="hero-title" style="margin: 22px auto 0; max-width: 900px; font-size: 76px; line-height: 1.02; font-weight: 700">Your taskbar, reborn as a smart dock.</h1>
-  <p style="margin: 22px auto 0; max-width: 640px; font-size: 20px; color: #a9adb9">A Mac-style dock, a clean menu bar and live widgets for your calendar, music, weather, system and your own business numbers. All in one glassy bar.</p>
-  <div style="margin-top: 34px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
-    <a href="#pricing" data-free class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
-      Download free
-    </a>
-    <a href="#demo" class="btn btn-ghost" style="background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.12); padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-      Watch the demo
-    </a>
+  <div class="marquees">
+    <div class="mq"><span class="mq-label">Your day</span><div class="mq-track" style="--d:44s"><img src="assets/strip-day.png" alt="NovaDock dock with your day widgets"><img src="assets/strip-day.png" alt="" aria-hidden="true"><img src="assets/strip-day.png" alt="" aria-hidden="true"><img src="assets/strip-day.png" alt="" aria-hidden="true"></div></div>
+    <div class="mq rev"><span class="mq-label">Money &amp; numbers</span><div class="mq-track" style="--d:50s"><img src="assets/strip-money.png" alt="NovaDock dock with money and numbers widgets"><img src="assets/strip-money.png" alt="" aria-hidden="true"><img src="assets/strip-money.png" alt="" aria-hidden="true"><img src="assets/strip-money.png" alt="" aria-hidden="true"></div></div>
+    <div class="mq"><span class="mq-label">Health &amp; tools</span><div class="mq-track" style="--d:40s"><img src="assets/strip-tools.png" alt="NovaDock dock with health and tools widgets"><img src="assets/strip-tools.png" alt="" aria-hidden="true"><img src="assets/strip-tools.png" alt="" aria-hidden="true"><img src="assets/strip-tools.png" alt="" aria-hidden="true"></div></div>
+    <div class="mq rev"><span class="mq-label">Quick links</span><div class="mq-track" style="--d:48s"><img src="assets/strip-links.png" alt="NovaDock dock with quick links widgets"><img src="assets/strip-links.png" alt="" aria-hidden="true"><img src="assets/strip-links.png" alt="" aria-hidden="true"><img src="assets/strip-links.png" alt="" aria-hidden="true"></div></div>
+    <div class="mq"><span class="mq-label">Music, weather &amp; system</span><div class="mq-track" style="--d:42s"><img src="assets/strip-media.png" alt="NovaDock dock with music, weather and system widgets"><img src="assets/strip-media.png" alt="" aria-hidden="true"><img src="assets/strip-media.png" alt="" aria-hidden="true"><img src="assets/strip-media.png" alt="" aria-hidden="true"></div></div>
   </div>
-  <p style="margin: 16px 0 0; font-size: 14px; color: #8a8f9c">Free download · Pro is a one-time $5.50 · No account needed</p>
-</section>
-
-<!-- DEMO -->
-<section id="demo" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">See it in action</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Stop opening apps. Just glance.</h2>
-    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">Meetings, music, weather, CPU and your sales are always one look away. Click any widget for the full view.</p>
-  </div>
-  <div style="margin-top: 40px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000">
-    <video src="assets/demo.mp4" poster="assets/hero.jpg" controls="controls" playsinline="playsinline" muted="muted" preload="metadata" style="display: block; width: 100%; height: auto"></video>
+  <div class="wrap">
+    <details class="wl"><summary>See all 110 widgets</summary><div class="wl-grid"><div class="wl-cat"><h4>AI <span>2</span></h4><p>AI Assistant · Plan my day</p></div><div class="wl-cat"><h4>Your day <span>20</span></h4><p>Calendar · Clock · Flip clock · Analog clock · Date &amp; week · This week · World clock · Countdown · Focus timer · Focus stats · To-do · Notes · Pinned note · Stopwatch · Quick timer · Workday progress · Day progress · Month progress · Year progress · Quote of the day</p></div><div class="wl-cat"><h4>Habits &amp; health <span>7</span></h4><p>Habit tracker · Goal · Mood · Water tracker · Breathe · Screen time · Focus / Quiet mode</p></div><div class="wl-cat"><h4>Money <span>4</span></h4><p>Crypto — any coins, USD or INR · Currency — any pairs, with converter · Expenses &amp; daily budget · Bill splitter</p></div><div class="wl-cat"><h4>Life <span>2</span></h4><p>Birthdays · Days since</p></div><div class="wl-cat"><h4>Music &amp; weather <span>3</span></h4><p>Now Playing · Weather · Moon phase</p></div><div class="wl-cat"><h4>System <span>10</span></h4><p>CPU, RAM &amp; network · Battery · Storage &amp; Network · Uptime · Public IP · Control Center · Downloads stack · Recycle Bin · Launchpad · Show desktop</p></div><div class="wl-cat"><h4>Tools <span>5</span></h4><p>Calculator · Unit converter · Dice &amp; coin · Password generator · Quick links — 18 ready sites (ChatGPT, Gmail, YouTube…)</p></div><div class="wl-cat"><h4>Weather &amp; air <span>21</span></h4><p>UV index · Air quality (AQI) · PM2.5 · PM10 · Humidity · Wind speed · Rain chance today · Sunrise · Sunset · Feels like · Air pressure · Cloud cover · Wind gusts · Dew point · Visibility · Rain today (mm) · Tomorrow&#x27;s low · Ozone · NO₂ (traffic pollution) · Carbon monoxide · Tomorrow&#x27;s high</p></div><div class="wl-cat"><h4>Developer <span>12</span></h4><p>GitHub repo stars · GitHub repo forks · GitHub open issues · GitHub followers · GitHub public repos · GitHub repo watchers · GitHub latest release · crates.io downloads · Hacker News karma · npm weekly downloads · PyPI weekly downloads · Website up / down</p></div><div class="wl-cat"><h4>Social <span>9</span></h4><p>YouTube subscribers · YouTube total views · Bluesky followers · Bluesky posts · Mastodon followers · Lichess rating · Chess.com rating · Codeforces rating · DEV.to articles</p></div><div class="wl-cat"><h4>Business <span>8</span></h4><p>Stripe available balance · Stripe pending balance · Shopify orders · Shopify products · Gumroad sales · Gumroad products · Lemon Squeezy orders · Any JSON API</p></div><div class="wl-cat"><h4>Fun &amp; world <span>7</span></h4><p>Advice of the hour · Cat fact · Earthquakes today · ISS speed · Crypto Fear &amp; Greed · Crypto market cap · Bitcoin dominance</p></div></div>
+    <p class="more">Plus your own widgets from any JSON API — with alerts when the number changes.</p></details>
   </div>
 </section>
 
-<!-- FEATURES BENTO -->
-<section id="features" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Everything in one bar</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1; max-width: 760px">The parts of macOS you miss, built properly for Windows.</h2>
-  </div>
-  <div class="bento">
-    <article class="span4" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 18px; overflow: hidden">
-      <div>
-        <h3 style="margin: 0 0 6px; font-size: 24px">A dock that feels alive</h3>
-        <p style="margin: 0; color: #a9adb9">Icons grow under your cursor, open apps get a dot, and windows group per app. Pin anything: apps, folders, files or websites. Drag it onto the dock and it stays.</p>
-      </div>
-      <img src="assets/dock-magnify.jpg" alt="Dock with magnified icons under the cursor" style="width: 100%; border-radius: 14px; display: block">
-    </article>
-    <article class="span2" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
-      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(91,140,255,0.15); color: #8fb0ff; display: grid; place-items: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path></svg>
-      </span>
-      <h3 style="margin: 0; font-size: 22px">A real menu bar</h3>
-      <p style="margin: 0; color: #a9adb9">The active app's name, power and lock menu, Control Center, and any widgets you like, in any order.</p>
-    </article>
-    <article class="span2" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
-      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,159,10,0.15); color: #ffb54d; display: grid; place-items: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h8l-1 8 10-12h-8z"></path></svg>
-      </span>
-      <h3 style="margin: 0; font-size: 22px">Smart automations</h3>
-      <p style="margin: 0; color: #a9adb9">You get a reminder before each meeting and your music pauses itself. Low-battery and high-CPU alerts. Alerts wait while you focus.</p>
-    </article>
-    <article class="span4" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; overflow: hidden">
-      <div style="flex: 1 1 260px; min-width: 0">
-        <h3 style="margin: 0 0 6px; font-size: 24px">Launchpad for every app</h3>
-        <p style="margin: 0; color: #a9adb9">One click or <b style="color: #f4f5f8">Ctrl + Alt + Space</b> shows every installed app in a searchable grid. Type and press Enter.</p>
-      </div>
-      <img src="assets/launchpad.jpg" alt="Launchpad grid of apps with search" style="flex: 1 1 320px; min-width: 0; width: 100%; border-radius: 14px; display: block">
-    </article>
-    <article class="span3" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
-      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(48,209,88,0.15); color: #5ee07f; display: grid; place-items: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-      </span>
-      <h3 style="margin: 0; font-size: 22px">Safe by design</h3>
-      <p style="margin: 0; color: #a9adb9">Quit NovaDock and your Windows taskbar comes back exactly as it was. Fullscreen videos and games hide the dock on their own.</p>
-    </article>
-    <article class="span3" style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
-      <span style="width: 44px; height: 44px; border-radius: 12px; background: rgba(191,90,242,0.15); color: #d199f7; display: grid; place-items: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a2 2 0 110-4h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.6 1.6 0 001.8.3H9a1.6 1.6 0 001-1.5V3a2 2 0 114 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 00-.3 1.8V9a1.6 1.6 0 001.5 1H21a2 2 0 110 4h-.1a1.6 1.6 0 00-1.5 1z"></path></svg>
-      </span>
-      <h3 style="margin: 0; font-size: 22px">Customise everything</h3>
-      <p style="margin: 0; color: #a9adb9">You can change icon size, spacing, magnification, position and layout. The tint, blur, border, corners, fonts and accent colour are yours too. Back it all up to one file.</p>
-    </article>
+<!-- LOOKS -->
+<section id="looks">
+  <div class="wrap">
+    <span class="kicker">Themes</span>
+    <h2 class="title"><span class="g">Your dock,</span><br>your look.</h2>
+    <p class="sub">Nine themes — glass, macOS light and dark, Midnight, Rose Gold, Neon. Bottom, top or sides. Floating pill or full width.</p>
+    <div class="shot"><video src="assets/themes.mp4" poster="assets/desktop-light.jpg" autoplay muted loop playsinline style="display:block;width:100%"></video></div>
   </div>
 </section>
 
-<!-- WIDGETS -->
-<section id="widgets" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; align-items: center; text-align: center">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Widgets</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Small tiles. Big picture.</h2>
-    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">16 built-in widgets, plus unlimited custom ones. Each sits in the dock or the menu bar and opens a full panel when you click it.</p>
-  </div>
-  <div class="g3">
-    
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-calendar.png" alt="Calendar panel with month view and upcoming meetings" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Calendar & meetings</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Google, Outlook and iCloud. See what’s next and get a reminder before it starts.</p>
-        </figcaption>
-      </figure>
-    
-
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-media.png" alt="Now playing panel with album art and playback controls" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Now Playing</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Album art and controls for any music or video app.</p>
-        </figcaption>
-      </figure>
-    
-
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-weather.png" alt="Weather panel with temperature and five-day forecast" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Weather</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Current conditions and a 5-day forecast. No API key needed.</p>
-        </figcaption>
-      </figure>
-    
-
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-control.png" alt="Control Center panel with quick toggles" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Control Center</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Focus mode, dock hiding, appearance, volume, lock and sleep.</p>
-        </figcaption>
-      </figure>
-    
-
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-pomodoro.png" alt="Focus timer panel with a countdown ring" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Focus timer</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Pomodoro sessions with breaks, and alerts held while you work.</p>
-        </figcaption>
-      </figure>
-    
-
-      <figure class="shot" style="margin: 0; background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
-        <div style="height: 300px; border-radius: 16px; background: linear-gradient(160deg, #3b2a7a, #7b2f6e 55%, #b4513a); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 18px">
-          <img src="assets/panel-custom.png" alt="Custom sales widget panel with value and sparkline" style="max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 16px 40px rgba(0,0,0,0.45); display: block">
-        </div>
-        <figcaption>
-          <h3 style="margin: 0 0 4px; font-size: 19px">Your live numbers</h3>
-          <p style="margin: 0; color: #a9adb9; font-size: 15px">Sales, orders, prices: any JSON API, with a history sparkline.</p>
-        </figcaption>
-      </figure>
-    
-  </div>
-  <p style="margin: 28px 0 0; text-align: center; color: #8a8f9c; font-size: 15px">Also included: Clock · World Clock · Battery · System Monitor · To-do · Notes · Downloads · Recycle Bin · Launchpad · Show Desktop · Focus mode</p>
-</section>
-
-<!-- CUSTOM WIDGETS HIGHLIGHT -->
-<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div class="g2" style="align-items: center; gap: 48px">
-    <div style="display: flex; flex-direction: column; gap: 16px">
-      <span style="color: #5ee07f; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Only in NovaDock</span>
-      <h2 class="sec-title" style="margin: 0; font-size: 44px; line-height: 1.1">Put your business numbers in your dock.</h2>
-      <p style="margin: 0; color: #a9adb9; font-size: 18px">Any API that returns JSON becomes a live tile: today's orders, Stripe balance, currency rates, crypto prices, followers. Pick a value and a refresh time. NovaDock tells you when the number moves.</p>
-      <ul style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Ready-made presets: Shopify orders, Stripe balance, USD→INR, Bitcoin and GitHub stars</span></li>
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Private headers and API keys stay on your PC</span></li>
-        <li style="display: flex; gap: 12px; align-items: flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ee07f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Alerts when the value changes or crosses a limit</span></li>
-      </ul>
-    </div>
-    <div style="position: relative">
-      <img src="assets/settings-custom.jpg" alt="Custom widget settings with URL, value path, headers and alerts" style="width: 100%; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); display: block">
-      <img src="assets/panel-custom.png" alt="Sales today panel showing a live value and a sparkline" style="position: absolute; right: -16px; bottom: -36px; width: 46%; border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); display: block">
+<!-- PRIVATE -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Private</span>
+    <h2 class="title"><span class="g">Smart,</span> and still private.</h2>
+    <div class="three">
+      <div class="f"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><h3>Runs on your PC</h3><p>Calendar, to-dos, notes and settings stay on your computer. Nothing is uploaded to us.</p></div>
+      <div class="f"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg><h3>No account</h3><p>Download, open, done. A license key is all you need — no sign-up, no subscription.</p></div>
+      <div class="f"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>Your AI key stays yours</h3><p>AI requests go straight from your PC to the provider you choose, with your own key.</p></div>
     </div>
   </div>
 </section>
 
-<!-- THEMES -->
-<section id="themes" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 120px 32px 40px">
-  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; align-items: center; text-align: center">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Make it yours</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">9 themes. 4 positions. Endless tweaks.</h2>
-    <p style="margin: 0; max-width: 620px; color: #a9adb9; font-size: 18px">Real Acrylic and Mica blur from Windows, or a custom-drawn glass look with any corner radius. Put the dock at the bottom, left, right or top, as a floating pill or a full-width bar.</p>
-  </div>
-  <div style="border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000">
-    <video src="assets/themes.mp4" poster="assets/desktop-light.jpg" controls="controls" playsinline="playsinline" muted="muted" loop="loop" preload="metadata" style="display: block; width: 100%; height: auto"></video>
-  </div>
-  <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center">
-    
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #1d2029; border: 1px solid rgba(255,255,255,0.3)"></span>Liquid Glass
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.3)"></span>macOS Dark
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #f4f4f6; border: 1px solid rgba(255,255,255,0.3)"></span>macOS Light
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #202020; border: 1px solid rgba(255,255,255,0.3)"></span>Windows 11 Mica
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #7c5cff; border: 1px solid rgba(255,255,255,0.3)"></span>Midnight
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #e0218a; border: 1px solid rgba(255,255,255,0.3)"></span>Rose Gold
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #2dd4bf; border: 1px solid rgba(255,255,255,0.3)"></span>Aurora
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #00ffd5; border: 1px solid rgba(255,255,255,0.3)"></span>Neon
-      </span>
-    
-
-      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #11131a; border: 1px solid rgba(255,255,255,0.08); font-size: 14px; color: #d6d8df">
-        <span style="width: 14px; height: 14px; border-radius: 50%; background: #000000; border: 1px solid rgba(255,255,255,0.3)"></span>Minimal
-      </span>
-    
-  </div>
-</section>
-
-<!-- BUILT FOR -->
-<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <h2 class="sec-title" style="margin: 0 0 32px; font-size: 40px; line-height: 1.1; text-align: center">Built for people who live on their PC</h2>
-  <div class="g4">
-    
-      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
-        <h3 style="margin: 0; font-size: 20px">Online sellers</h3>
-        <p style="margin: 0; color: #a9adb9; font-size: 15px">Watch today’s orders and revenue tick up while you work. No dashboard tab needed.</p>
-      </article>
-    
-
-      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
-        <h3 style="margin: 0; font-size: 20px">Developers</h3>
-        <p style="margin: 0; color: #a9adb9; font-size: 15px">CPU, RAM, GitHub stars and a focus timer in one bar, with a launcher one shortcut away.</p>
-      </article>
-    
-
-      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
-        <h3 style="margin: 0; font-size: 20px">Founders</h3>
-        <p style="margin: 0; color: #a9adb9; font-size: 15px">Next meeting, Stripe balance and key numbers in one glance.</p>
-      </article>
-    
-
-      <article style="background: #11131a; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
-        <h3 style="margin: 0; font-size: 20px">Students</h3>
-        <p style="margin: 0; color: #a9adb9; font-size: 15px">Pomodoro, to-dos and notes without opening another app.</p>
-      </article>
-    
-  </div>
-</section>
-
-<!-- PRIVACY -->
-<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="background: #0d1a14; border: 1px solid rgba(94,224,127,0.2); border-radius: 26px; padding: 48px; display: flex; flex-direction: column; gap: 28px">
-    <h2 class="sec-title" style="margin: 0; font-size: 40px; line-height: 1.1">Private by default.</h2>
-    <div class="g3">
-      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">Runs on your PC</h3><p style="margin: 0; color: #b7c4bc">Your layout, notes, to-dos and keys never leave your computer.</p></div>
-      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">No account, no tracking</h3><p style="margin: 0; color: #b7c4bc">No sign-up and no telemetry. NovaDock has no server to send your data to.</p></div>
-      <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0; font-size: 19px; color: #5ee07f">Only what you turn on</h3><p style="margin: 0; color: #b7c4bc">Weather, calendars and your APIs talk straight to their own services.</p></div>
+<!-- LIGHT -->
+<section id="light">
+  <div class="wrap">
+    <span class="kicker">Lightweight</span>
+    <h2 class="title"><span class="g">Feels light.</span><br>Because it is.</h2>
+    <p class="sub">Built in Rust with Tauri — not Electron. NovaDock uses Windows' own WebView2 engine and runs all its windows in one shared renderer, so it stays out of your way.</p>
+    <div class="stats">
+      <div class="stat"><b>3 MB</b><span>download</span></div>
+      <div class="stat"><b>1</b><span>shared renderer for the dock, menu bar and panels</span></div>
+      <div class="stat"><b>~0%</b><span>CPU when you're not using it</span></div>
+      <div class="stat"><b>Live</b><span>memory meter in Settings — see exactly what it uses</span></div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section id="pricing" class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px 40px">
-  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 36px">
-    <span style="color: #3a6bff; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase">Pricing</span>
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1">Start free. Go Pro when you love it.</h2>
-    <p style="margin: 0; color: #a9adb9; font-size: 18px">Every download includes a 7-day Pro trial. No card needed.</p>
-  </div>
-  <div class="g2" style="max-width: 920px; margin: 0 auto; align-items: stretch">
-    <div style="background: #11131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 26px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
-      <h3 style="margin: 0; font-size: 22px">Free</h3>
-      <div style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 56px; font-weight: 700; line-height: 1">$0</div>
-      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1"><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Mac-style dock with magnification</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Menu bar + Launchpad</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Clock, weather, system & battery widgets</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>2 themes, every dock position & size</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9adb9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Free forever</span></li></ul>
-      <a href="#pricing" data-free class="btn btn-ghost" style="background: rgba(255,255,255,0.06); color: #f4f5f8; border: 1px solid rgba(255,255,255,0.16); padding: 14px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Download free for Windows</a>
+<section id="pricing">
+  <div class="wrap">
+    <span class="kicker">Pricing</span>
+    <h2 class="title"><span class="g">One price.</span><br>Yours forever.</h2>
+    <div class="price">
+      <span class="badge">14-day money-back guarantee</span>
+      <div class="amount">$5.50<small>once</small></div>
+      <div style="color:var(--dim);font-size:14px">About ₹520 · lifetime license · no subscription</div>
+      <ul>
+        <li>Dock, menu bar and Launchpad</li>
+        <li>AI Assistant — Gemini, ChatGPT, Claude, Groq</li>
+        <li>110 widgets — calendar, music, weather, crypto, AI and more</li>
+        <li>Custom API widgets and automations</li>
+        <li>All 9 themes · free updates for life</li>
+        <li>Lightweight — 3 MB download, Rust + Tauri</li>
+        <li>Use on up to 3 PCs</li>
+      </ul>
+      <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
+      <a class="btn btn-d" href="#pricing" data-free>Get it from the Microsoft Store</a>
+      <div class="fine" data-direct style="display:none">Prefer an installer? <a href="#" data-direct-link style="text-decoration:underline">Download the .exe directly</a> (Windows may show a SmartScreen notice).</div>
+      <div class="fine">Install NovaDock from the Microsoft Store, buy once, paste the key from your email — done. Not happy? Full refund within 14 days.</div>
+      <div class="fine" data-buy-note style="display:none">Checkout is not set up yet.</div>
     </div>
-    <div style="background: #11131a; border: 2px solid #3a6bff; border-radius: 26px; padding: 32px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 30px 90px rgba(58,107,255,0.2)">
-      <div style="display: flex; justify-content: space-between; align-items: center"><h3 style="margin: 0; font-size: 22px">Pro</h3><span style="padding: 4px 12px; border-radius: 999px; background: #3a6bff; color: #fff; font-size: 13px; font-weight: 600">One-time</span></div>
-      <div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Space Grotesk', Inter, sans-serif; font-size: 56px; font-weight: 700; line-height: 1">$5.50</span><span style="color: #8a8f9c">USD · lifetime</span></div>
-      <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; flex: 1"><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Everything in Free, plus:</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Calendar & meetings, Now Playing, Focus timer</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>To-do, Notes, World clock, Control Center</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Unlimited custom API widgets (sales, orders, prices)</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>All automations + Focus mode</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>All 9 themes + full appearance control</span></li><li style="display: flex; gap: 10px; align-items: flex-start"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8fb0ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg><span>Use on up to 3 PCs · free updates for life</span></li></ul>
-      <a href="#pricing" data-buy="card" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 15px 24px; border-radius: 14px; font-weight: 600; font-size: 17px; text-align: center; min-height: 50px; display: flex; align-items: center; justify-content: center">Get Pro — $5.50</a>
-      <p data-buy-note style="display: none; margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,159,10,0.12); color: #ffcf8a; font-size: 14px; text-align: center">Checkout opens soon. Payment link is not set up yet.</p>
-    </div>
   </div>
-  <p style="margin: 22px 0 0; text-align: center; color: #8a8f9c; font-size: 14px">Windows 10 &amp; 11 · 64-bit · Secure checkout · Taxes handled for you · <a href="refunds.html">14-day refund</a></p>
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="wrap" style="max-width: 860px; margin: 0 auto; padding: 96px 32px 40px">
-  <h2 class="sec-title" style="margin: 0 0 28px; font-size: 44px; line-height: 1.1; text-align: center">Questions, answered</h2>
-  <div style="display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1)">
-    <details class="faq" open style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>What does NovaDock actually do?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">It replaces the Windows taskbar with a Mac-style dock at the bottom and a menu bar at the top. Both can hold live widgets: calendar, music, weather, system stats, focus timer and your own custom numbers. Click any widget to open a full panel.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it work on Windows 10 and Windows 11?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes, on 64-bit Windows 10 and Windows 11. On Windows 10 the Mica effect falls back to Acrylic blur.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>What happens to my Windows taskbar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">You choose: hidden, auto-hide or always visible. When you quit NovaDock, the taskbar and your screen space go back exactly as they were. If something ever goes wrong, run "NovaDock.exe --restore-taskbar".</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>How do I connect my Google, Outlook or iCloud calendar?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Paste your calendar’s secret iCal link in Settings, under Calendar & Weather. It is read-only, and NovaDock fetches it directly from your PC. Nothing goes through our servers.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Is it a subscription?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. NovaDock is free to download. Pro is a one-time $5.50 payment that you keep forever, with free updates. Every download starts with a 7-day Pro trial.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Can I put the dock on the left, right or top?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">Yes. Choose bottom, left, right or top, as a floating pill or a full-width bar, with auto-hide if you want it out of the way.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Does it slow down my PC?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">NovaDock is a native Tauri app: a small installer and a light memory footprint. Fullscreen games and videos hide the dock automatically.</p></details>
-<details class="faq" style="border-bottom: 1px solid rgba(255,255,255,0.1)"><summary class="faq-q" style="list-style:none;min-height: 56px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 8px; color: #f4f5f8; font: 600 18px Inter, system-ui, sans-serif; cursor: pointer"><span>Do you collect any data?</span><span class="sign" style="flex: none; font-size: 24px; line-height: 1; color: #8fb0ff">+</span></summary><p style="margin: 0; padding: 0 8px 20px; color: #a9adb9">No. There is no account and no telemetry. Your settings, notes and API keys stay in your own AppData folder.</p></details>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 96px 32px">
-  <div style="background: #11131a; border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; padding: 64px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px">
-    <h2 class="sec-title" style="margin: 0; font-size: 48px; line-height: 1.1; max-width: 720px">Give Windows the dock it always deserved.</h2>
-    <p style="margin: 0; color: #a9adb9; font-size: 18px">Set up in under a minute. Quit any time, and the taskbar comes right back.</p>
-    <a href="#pricing" class="btn btn-primary" style="background: #3a6bff; color: #ffffff; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 17px; min-height: 48px; display: inline-flex; align-items: center">Download free · Pro $5.50</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer style="border-top: 1px solid rgba(255,255,255,0.07)">
-  <div class="wrap" style="max-width: 1200px; margin: 0 auto; padding: 32px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; color: #8a8f9c; font-size: 14px">
-    <span>© 2026 NovaDock. Made in India.</span>
-    <div style="display: flex; gap: 22px; flex-wrap: wrap">
-      <a href="#faq" style="color: #a9adb9">Help</a>
-      <a href="privacy.html" style="color: #a9adb9">Privacy</a>
-      <a href="terms.html" style="color: #a9adb9">Terms</a>
-      <a href="refunds.html" style="color: #a9adb9">Refunds</a>
-      <a href="mailto:vikasmc100@gmail.com" style="color: #a9adb9">Contact</a>
+<section id="faq">
+  <div class="wrap">
+    <span class="kicker">FAQ</span>
+    <h2 class="title">Questions</h2>
+    <div class="faq">
+      <details><summary>Is it a subscription?</summary><p>No. You pay $5.50 once and keep NovaDock forever, with free updates. Not happy? Email us within 14 days for a full refund.</p></details>
+      <details><summary>Can I try it before buying?</summary><p>Yes — the dock at the top of this page is the real NovaDock running live in your browser. Hover it and click any widget. And if it isn't right for you on your PC, you get a full refund within 14 days.</p></details>
+      <details><summary>Where do I install it from?</summary><p>From the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a> — one click, no warnings, and updates arrive automatically. If you use the direct .exe instead and Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers.</p></details>
+      <details><summary>I'm on my phone. Can I use NovaDock?</summary><p>NovaDock is for Windows 10 and 11 PCs. Tap <b>Send to my PC</b> to share the link to yourself, then open it on your computer.</p></details>
+      <details><summary>Does the AI cost extra?</summary><p>NovaDock connects to the AI you choose with your own API key. Google Gemini and Groq give free keys that are enough for everyday use; ChatGPT and Claude keys are billed by those companies. Your chats are never stored on our servers.</p></details>
+      <details><summary>Does it work on Windows 10 and 11?</summary><p>Yes — Windows 10 (1809 or later) and Windows 11, 64-bit.</p></details>
+      <details><summary>Can I get my normal taskbar back?</summary><p>Any time. Pick “Always visible” for the taskbar in Settings, or quit NovaDock and the Windows taskbar returns exactly as it was.</p></details>
+      <details><summary>How many PCs can I use it on?</summary><p>One license works on up to 3 of your PCs.</p></details>
+      <details><summary>Can I get a refund?</summary><p>Yes — see the <a href="refunds.html" style="text-decoration:underline">refund policy</a>.</p></details>
     </div>
+  </div>
+</section>
+
+<div class="end">
+  <h2><span style="color:#8a8a94">Make Windows</span><br>feel new again.</h2>
+  <div class="hero-cta" style="margin-top:34px">
+    <a class="btn btn-w" href="#pricing" data-free>Get NovaDock</a>
+    <a class="btn btn-d" href="#pricing" data-buy="card">Buy lifetime · $5.50</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Vikas Swami · NovaDock is an independent app, not affiliated with Apple or Microsoft.</div>
+    <div class="fl"><a href="#faq">Help</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Refunds</a><a href="mailto:vikasmc100@gmail.com">vikasmc100@gmail.com</a></div>
   </div>
 </footer>
 
-</div>
-
+<script>
+/* Hide the headline while a widget panel is open in the live hero, so they don't overlap. */
+window.addEventListener('message', function (e) {
+  var m = e.data;
+  if (!m || m.ndHero !== 'panel') return;
+  document.getElementById('heroText').classList.toggle('away', !!m.open);
+  document.getElementById('heroHint').style.opacity = m.open ? 0 : 1;
+});
+</script>
 <script>
 (function () {
   var cfg = window.NOVADOCK || {};
-  document.querySelectorAll('[data-free]').forEach(function (a) { if (cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', 'NovaDock_0.1.0_x64-setup.exe'); } });
-  var card = document.querySelector('[data-buy="card"]');
-  var note = document.querySelector('[data-buy-note]');
-  if (cfg.checkoutUrl) {
-    card.href = cfg.checkoutUrl;
-    if (/gumroad\.com|gum\.co/.test(cfg.checkoutUrl)) { var g = document.createElement('script'); g.src = 'https://gumroad.com/js/gumroad.js'; document.body.appendChild(g); }
-    else { card.target = '_blank'; card.rel = 'noopener'; }
-  } else {
-    card.addEventListener('click', function (e) { e.preventDefault(); note.style.display = 'block'; });
+  var file = (cfg.freeUrl || '').split('/').pop();
+  var ua = navigator.userAgent || '';
+  var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+  var isWin = /Windows/i.test(ua) && !mobile;
+  document.documentElement.classList.add(isWin ? 'is-win' : 'not-win');
+  window.__ndPlatform = isWin ? 'win' : (mobile ? 'mobile' : 'other');
+  var pageUrl = 'https://novadock.online/';
+  function toast(t) { var d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(function () { d.remove(); }, 3200); }
+  function sendToPc(e) {
+    e.preventDefault();
+    var text = 'NovaDock — Mac-style dock & 110 widgets for Windows. Open this on my PC:';
+    if (navigator.share) { navigator.share({ title: 'NovaDock', text: text, url: pageUrl }).catch(function () {}); return; }
+    try { navigator.clipboard.writeText(pageUrl).then(function () { toast('Link copied — open novadock.online on your Windows PC'); }); }
+    catch (x) { location.href = 'mailto:?subject=' + encodeURIComponent('NovaDock for my PC') + '&body=' + encodeURIComponent(text + ' ' + pageUrl); }
   }
+  document.querySelectorAll('[data-free]').forEach(function (a) {
+    if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
+    else if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
+    else {
+      a.setAttribute('data-kind', 'send');
+      a.lastChild.textContent = a.closest('.price') ? 'Send the link to my PC' : (a.closest('nav') ? 'Send to my PC' : 'Send to my PC');
+      a.addEventListener('click', sendToPc);
+    }
+  });
+  document.querySelectorAll('[data-store]').forEach(function (a) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; });
+  if (isWin && cfg.freeUrl) document.querySelectorAll('[data-direct]').forEach(function (d) { d.style.display = 'block'; var l = d.querySelector('a'); l.href = cfg.freeUrl; l.setAttribute('download', file); });
+  var note = document.querySelector('[data-buy-note]');
+  document.querySelectorAll('[data-buy="card"]').forEach(function (card) {
+    if (cfg.checkoutUrl) { card.href = cfg.checkoutUrl; card.target = '_blank'; card.rel = 'noopener'; }
+    else card.addEventListener('click', function (e) { e.preventDefault(); if (note) note.style.display = 'block'; });
+  });
   if (/[?&]purchased=1/.test(location.search)) {
     // Dodo adds ?status=... to the return URL. Only a "succeeded" payment gets the thank-you.
     var q = new URLSearchParams(location.search);
@@ -471,13 +374,13 @@ html{scroll-behavior:smooth}
     var kind, html;
     if (status === 'succeeded') {
       kind = 'ok';
-      html = '<strong style="color:#fff">Thanks for buying NovaDock Pro!</strong><br>' + (q.get('license_key') ? 'Your license key: <code style="user-select:all;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px;color:#fff">' + q.get('license_key').replace(/[^A-Za-z0-9_,-]/g, '') + '</code> (also sent to your email). ' : 'Your license key is on its way to your email. ') + 'Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don\u2019t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.';
+      html = '<strong style="color:#fff">Thanks for buying NovaDock!</strong><br>' + (q.get('license_key') ? 'Your license key: <code style="user-select:all;background:rgba(255,255,255,.12);padding:2px 6px;border-radius:6px;color:#fff">' + q.get('license_key').replace(/[^A-Za-z0-9_,-]/g, '') + '</code> (also sent to your email). ' : 'Your license key is on its way to your email. ') + 'Open NovaDock &rarr; Settings &rarr; NovaDock Pro, paste the key and click Activate. Don’t have the app yet? <a href="' + (cfg.freeUrl || '#pricing') + '" style="color:#7dffb0">Download it here</a>.';
     } else if (status === 'processing' || status.indexOf('requires') === 0) {
       kind = 'wait';
       html = '<strong style="color:#fff">Your payment is still processing.</strong><br>Once it is confirmed, your license key will be emailed to you. If nothing arrives within an hour, contact us from the link at the bottom of this page.';
     } else if (status) {
       kind = 'fail';
-      html = '<strong style="color:#fff">Payment didn\u2019t go through.</strong><br>You have not been charged and no license was created. <a href="' + buyUrl + '" style="color:#ffb3b3">Try again</a> with another card or payment method.';
+      html = '<strong style="color:#fff">Payment didn’t go through.</strong><br>You have not been charged and no license was created. <a href="' + buyUrl + '" style="color:#ffb3b3">Try again</a> with another card or payment method.';
     } else {
       kind = 'wait';
       html = '<strong style="color:#fff">Welcome back!</strong><br>If your payment was completed, your license key is on its way to your email.';
@@ -494,7 +397,7 @@ html{scroll-behavior:smooth}
 })();
 </script>
 <script>
-/* Cookie-free page and click counts via GoatCounter (only when a code is set above). */
+/* Cookie-free page and click counts via GoatCounter. */
 (function () {
   var code = (window.NOVADOCK || {}).goatcounter;
   if (!code) return;
@@ -510,7 +413,10 @@ html{scroll-behavior:smooth}
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a');
     if (!a) return;
-    if (a.hasAttribute('data-free')) track('download-click');
+    var kind = a.getAttribute('data-kind');
+    if (a.hasAttribute('data-store') || a.hasAttribute('data-store-pill') ||(a.hasAttribute('data-free') && kind === 'store')) track('store-click');
+    else if (a.hasAttribute('data-free') && kind === 'send') track('send-to-pc-click');
+    else if (a.hasAttribute('data-free') || a.hasAttribute('data-direct-link')) track('download-click');
     else if (a.getAttribute('data-buy') === 'card') track('buy-pro-click');
   }, true);
   if (window.__ndCheckoutStatus) {
