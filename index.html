@@ -14,7 +14,7 @@
 <script>
   window.NOVADOCK = {
     goatcounter: "novadock",
-    freeUrl: "download/NovaDock_0.1.2_x64-setup.exe",
+    freeUrl: "download/NovaDock-setup.exe",
     storeUrl: "https://apps.microsoft.com/detail/9N13CW1WM4K6?mode=direct",
     checkoutUrl: "https://checkout.dodopayments.com/buy/pdt_0NrqnhhYoS5XABSowkT3c?quantity=1&redirect_url=https%3A%2F%2Fnovadock.online%2F%3Fpurchased%3D1"
   };
@@ -292,12 +292,12 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
         <li>Custom API widgets and automations</li>
         <li>All 9 themes · free updates for life</li>
         <li>Lightweight — 3 MB download, Rust + Tauri</li>
-        <li>Use on up to 3 PCs</li>
+        <li>One license for one PC</li>
       </ul>
       <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
-      <a class="btn btn-d" href="#pricing" data-free>Get it from the Microsoft Store</a>
-      <div class="fine" data-direct style="display:none">Prefer an installer? <a href="#" data-direct-link style="text-decoration:underline">Download the .exe directly</a> (Windows may show a SmartScreen notice).</div>
-      <div class="fine">Install NovaDock from the Microsoft Store, buy once, paste the key from your email — done. Not happy? Full refund within 14 days.</div>
+      <a class="btn btn-d" href="#pricing" data-free>Download for Windows</a>
+      <div class="fine" data-direct style="display:none">Prefer the Microsoft Store? <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" target="_blank" rel="noopener" data-store style="text-decoration:underline">Get it there</a> (automatic updates).</div>
+      <div class="fine">Download, install in seconds, buy once and paste the key from your email — done. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>. Not happy? Full refund within 14 days.</div>
       <div class="fine" data-buy-note style="display:none">Checkout is not set up yet.</div>
     </div>
   </div>
@@ -311,7 +311,7 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
     <div class="faq">
       <details><summary>Is it a subscription?</summary><p>No. You pay $5.50 once and keep NovaDock forever, with free updates. Not happy? Email us within 14 days for a full refund.</p></details>
       <details><summary>Can I try it before buying?</summary><p>Yes — the dock at the top of this page is the real NovaDock running live in your browser. Hover it and click any widget. And if it isn't right for you on your PC, you get a full refund within 14 days.</p></details>
-      <details><summary>Where do I install it from?</summary><p>From the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a> — one click, no warnings, and updates arrive automatically. If you use the direct .exe instead and Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers.</p></details>
+      <details><summary>Where do I install it from?</summary><p>Right here: click <b>Download for Windows</b> and run the installer — it takes a few seconds and needs no admin rights. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers. Prefer automatic updates? NovaDock is also on the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a>.</p></details>
       <details><summary>I'm on my phone. Can I use NovaDock?</summary><p>NovaDock is for Windows 10 and 11 PCs. Tap <b>Send to my PC</b> to share the link to yourself, then open it on your computer.</p></details>
       <details><summary>Does the AI cost extra?</summary><p>NovaDock connects to the AI you choose with your own API key. Google Gemini and Groq give free keys that are enough for everyday use; ChatGPT and Claude keys are billed by those companies. Your chats are never stored on our servers.</p></details>
       <details><summary>Does it work on Windows 10 and 11?</summary><p>Yes — Windows 10 (1809 or later) and Windows 11, 64-bit.</p></details>
@@ -367,8 +367,8 @@ window.addEventListener('message', function (e) {
     catch (x) { location.href = 'mailto:?subject=' + encodeURIComponent('NovaDock for my PC') + '&body=' + encodeURIComponent(text + ' ' + pageUrl); }
   }
   document.querySelectorAll('[data-free]').forEach(function (a) {
-    if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
-    else if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
+    if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
+    else if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
     else if (!mobile) { a.href = storeWeb; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
     else {
       a.setAttribute('data-kind', 'send');
@@ -377,7 +377,7 @@ window.addEventListener('message', function (e) {
     }
   });
   document.querySelectorAll('[data-store]').forEach(function (a) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; });
-  if (isWin && cfg.freeUrl) document.querySelectorAll('[data-direct]').forEach(function (d) { d.style.display = 'block'; var l = d.querySelector('a'); l.href = cfg.freeUrl; l.setAttribute('download', file); });
+  if (isWin) document.querySelectorAll('[data-direct]').forEach(function (d) { d.style.display = 'block'; });
   var note = document.querySelector('[data-buy-note]');
   document.querySelectorAll('[data-buy="card"]').forEach(function (card) {
     if (cfg.checkoutUrl) { card.href = cfg.checkoutUrl; card.target = '_blank'; card.rel = 'noopener'; }
