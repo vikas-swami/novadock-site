@@ -403,6 +403,17 @@ window.addEventListener('message', function (e) {
     if (cfg.checkoutUrl) { card.href = cfg.checkoutUrl; card.target = '_blank'; card.rel = 'noopener'; }
     else card.addEventListener('click', function (e) { e.preventDefault(); if (note) note.style.display = 'block'; });
   });
+  if (/[?&]supported=1/.test(location.search)) {
+    var sq = new URLSearchParams(location.search);
+    var ok = (sq.get('status') || 'succeeded').toLowerCase() === 'succeeded';
+    var sb = document.createElement('div');
+    sb.setAttribute('role', 'status');
+    sb.style.cssText = 'position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:9999;max-width:520px;width:calc(100% - 32px);padding:16px 44px 16px 18px;border-radius:14px;background:' + (ok ? '#0f2a1a' : '#2a0f12') + ';border:1px solid ' + (ok ? '#2fbf63' : '#e5484d') + ';color:#fff;font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif';
+    sb.innerHTML = (ok ? '<strong>Thank you for supporting NovaDock! ♥</strong><br>It really helps keep the updates coming.' : '<strong>The payment didn’t go through.</strong><br>You have not been charged.') + '<button aria-label="Close" style="position:absolute;right:10px;top:8px;background:none;border:0;color:inherit;font-size:22px;cursor:pointer">&times;</button>';
+    sb.querySelector('button').onclick = function () { sb.remove(); };
+    document.body.appendChild(sb);
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+  }
   if (/[?&]purchased=1/.test(location.search)) {
     // Dodo adds ?status=... to the return URL. Only a "succeeded" payment gets the thank-you.
     var q = new URLSearchParams(location.search);
