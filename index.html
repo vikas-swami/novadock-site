@@ -387,6 +387,7 @@ window.addEventListener('message', function (e) {
       var email = (f.email.value || '').trim();
       msg.className = 'fine';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.className = 'fine err'; msg.textContent = 'Please enter a valid email address.'; return; }
+      if (!/^https:/.test(GET_URL || '')) { msg.className = 'fine err'; msg.textContent = 'Downloads open in a few minutes — we are finishing the setup. Please try again shortly.'; return; }
       var btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending…';
       fetch(GET_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ email: email, website: f.website.value, source: location.hash || 'website', lang: navigator.language }) })
         .then(function (r) { return r.json(); })
