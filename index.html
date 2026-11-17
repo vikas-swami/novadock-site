@@ -194,8 +194,8 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
     <h1><span class="g">Goodbye, taskbar.</span><br>Hello, smart dock.</h1>
     <p>A Mac-style dock, a clean menu bar and 110 live widgets — with an AI assistant built in. For Windows 10 &amp; 11.</p>
     <div class="hero-cta">
-      <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
-      <a class="btn btn-d" href="#pricing">See what you get</a>
+      <a class="btn btn-w" href="download/NovaDock-setup.exe" data-free>Try free for 3 days</a>
+      <a class="btn btn-d" href="#pricing" data-buy="card">Buy — $5.50</a>
     </div>
     <div class="hero-note" data-note-win>One-time $5.50 · 14-day money-back guarantee · Try it live right here ↓</div>
     <div class="pc-note" data-note-mobile>💻 NovaDock is a Windows app. Send this link to your PC and install it there.</div>
@@ -295,7 +295,7 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
         <li>One license for one PC</li>
       </ul>
       <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
-      <div class="fine">Buy once — your license key and the download link arrive by email right away. Install, paste the key — done. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>. Not happy? Full refund within 14 days.</div>
+      <div class="fine">Not sure yet? <a href="download/NovaDock-setup.exe" data-free style="text-decoration:underline">Try it free for 3 days</a> first. Buy once — your license key and the download link arrive by email right away. Paste the key in NovaDock — done. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>. Not happy? Full refund within 14 days.</div>
       <div class="fine" data-buy-note style="display:none">Checkout is not set up yet.</div>
     </div>
   </div>
@@ -309,7 +309,7 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
     <div class="faq">
       <details><summary>Is it a subscription?</summary><p>No. You pay $5.50 once and keep NovaDock forever, with free updates. Not happy? Email us within 14 days for a full refund.</p></details>
       <details><summary>Can I try it before buying?</summary><p>Yes — the dock at the top of this page is the real NovaDock running live in your browser. Hover it and click any widget. And if it isn't right for you on your PC, you get a full refund within 14 days.</p></details>
-      <details><summary>Where do I install it from?</summary><p>Buy NovaDock here — the download link and your license key arrive by email right away. Run the installer (a few seconds, no admin rights needed). If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers. Prefer automatic updates? NovaDock is also on the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a>.</p></details>
+      <details><summary>Where do I install it from?</summary><p>Click <b>Try free for 3 days</b> and run the installer (a few seconds, no admin rights needed). Everything works for 3 days; then buy once and paste the key from your email. Already bought? The download link is in your purchase email too. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers. Prefer automatic updates? NovaDock is also on the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a>.</p></details>
       <details><summary>I'm on my phone. Can I use NovaDock?</summary><p>NovaDock is for Windows 10 and 11 PCs. Tap <b>Send to my PC</b> to share the link to yourself, then open it on your computer.</p></details>
       <details><summary>Does the AI cost extra?</summary><p>NovaDock connects to the AI you choose with your own API key. Google Gemini and Groq give free keys that are enough for everyday use; ChatGPT and Claude keys are billed by those companies. Your chats are never stored on our servers.</p></details>
       <details><summary>Does it work on Windows 10 and 11?</summary><p>Yes — Windows 10 (1809 or later) and Windows 11, 64-bit.</p></details>
@@ -323,8 +323,8 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
 <div class="end">
   <h2><span style="color:#8a8a94">Make Windows</span><br>feel new again.</h2>
   <div class="hero-cta" style="margin-top:34px">
-    <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
-    <a class="btn btn-d" href="#pricing">See what you get</a>
+    <a class="btn btn-w" href="download/NovaDock-setup.exe" data-free>Try free for 3 days</a>
+    <a class="btn btn-d" href="#pricing" data-buy="card">Buy — $5.50</a>
   </div>
 </div>
 
@@ -365,16 +365,12 @@ window.addEventListener('message', function (e) {
     catch (x) { location.href = 'mailto:?subject=' + encodeURIComponent('NovaDock for my PC') + '&body=' + encodeURIComponent(text + ' ' + pageUrl); }
   }
   document.querySelectorAll('[data-free]').forEach(function (a) {
-    if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
-    else if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
-    else if (!mobile && cfg.freeUrl) {
-      // Mac / Linux: still give the Windows installer (to copy to a PC), with a heads-up.
+    if (!mobile && cfg.freeUrl) {
       a.href = cfg.freeUrl; a.setAttribute('download', file);
-      a.addEventListener('click', function () { toast('NovaDock is for Windows 10/11 — run this installer on your Windows PC'); });
-    }
-    else {
+      if (!isWin) a.addEventListener('click', function () { toast('NovaDock is for Windows 10/11 — run this installer on your Windows PC'); });
+    } else if (mobile) {
       a.setAttribute('data-kind', 'send');
-      a.lastChild.textContent = a.closest('.price') ? 'Send the link to my PC' : (a.closest('nav') ? 'Send to my PC' : 'Send to my PC');
+      if (a.classList.contains('btn')) a.lastChild.textContent = 'Send to my PC';
       a.addEventListener('click', sendToPc);
     }
   });
