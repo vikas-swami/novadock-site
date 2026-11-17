@@ -369,7 +369,11 @@ window.addEventListener('message', function (e) {
   document.querySelectorAll('[data-free]').forEach(function (a) {
     if (isWin && cfg.freeUrl) { a.href = cfg.freeUrl; a.setAttribute('download', file); }
     else if (isWin && cfg.storeUrl) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
-    else if (!mobile) { a.href = storeWeb; a.target = '_blank'; a.rel = 'noopener'; a.setAttribute('data-kind', 'store'); }
+    else if (!mobile && cfg.freeUrl) {
+      // Mac / Linux: still give the Windows installer (to copy to a PC), with a heads-up.
+      a.href = cfg.freeUrl; a.setAttribute('download', file);
+      a.addEventListener('click', function () { toast('NovaDock is for Windows 10/11 — run this installer on your Windows PC'); });
+    }
     else {
       a.setAttribute('data-kind', 'send');
       a.lastChild.textContent = a.closest('.price') ? 'Send the link to my PC' : (a.closest('nav') ? 'Send to my PC' : 'Send to my PC');
