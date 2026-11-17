@@ -16,6 +16,7 @@
     goatcounter: "novadock",
     freeUrl: "download/NovaDock-setup.exe",
     storeUrl: "https://apps.microsoft.com/detail/9N13CW1WM4K6?mode=direct",
+    signupUrl: "SIGNUP_URL_PENDING",
     checkoutUrl: "https://checkout.dodopayments.com/buy/pdt_0NrqnhhYoS5XABSowkT3c?quantity=1&redirect_url=https%3A%2F%2Fnovadock.online%2F%3Fpurchased%3D1"
   };
 </script>
@@ -174,15 +175,19 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
 .bf-later{margin:-4px 0 10px;color:#ffd60a;font-size:15px}
 .bf-later b{font-weight:700}
 @media (max-width:720px){.bf-bar{font-size:13px;gap:6px;padding:8px 10px}.bf-go{display:none}}
+.get-form{display:flex;gap:10px;margin:18px 0 6px;flex-wrap:wrap}
+.get-form input[type=email]{flex:1 1 220px;min-width:0;padding:13px 16px;border-radius:999px;border:1px solid var(--line2);background:#111;color:#fff;font:inherit;font-size:15px}
+.get-form input[type=email]:focus{outline:none;border-color:#0a84ff}
+.get-form .btn{flex:0 0 auto}
+[data-get-msg].ok{color:#7dffb0}[data-get-msg].err{color:#ff9b9b}
 </style>
 </head>
 <body>
-<a class="bf-bar" href="#pricing"><b>BLACK FRIDAY</b> Launch price <b>$5.50</b> — goes up to $15 on Dec 1 <span class="bf-cd" data-bf-cd></span><span class="bf-go">Get it →</span></a>
 <header>
   <nav class="wrap">
     <a class="logo" href="#"><i><svg width="13" height="13" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></i>NovaDock</a>
-    <div class="links"><a href="#ai">AI</a><a href="#widgets">Widgets</a><a href="#looks">Themes</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
-    <a class="btn btn-w" href="#pricing" data-buy="card">Buy — $5.50</a>
+    <div class="links"><a href="#ai">AI</a><a href="#widgets">Widgets</a><a href="#looks">Themes</a><a href="#get">Get it</a><a href="#faq">FAQ</a></div>
+    <a class="btn btn-w" href="#get">Get it free</a>
   </nav>
 </header>
 
@@ -190,14 +195,13 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
 <div class="hero" id="hero">
   <iframe src="play/playground.html?hero=1" title="NovaDock running live — hover the dock and click the widgets" loading="eager"></iframe>
   <div class="hero-text" id="heroText">
-    <a class="live-pill" href="https://apps.microsoft.com/detail/9N13CW1WM4K6" target="_blank" rel="noopener" data-store-pill><i></i>Now live on the Microsoft Store<span>→</span></a>
     <h1><span class="g">Goodbye, taskbar.</span><br>Hello, smart dock.</h1>
     <p>A Mac-style dock, a clean menu bar and 110 live widgets — with an AI assistant built in. For Windows 10 &amp; 11.</p>
     <div class="hero-cta">
-      <a class="btn btn-w" href="download/NovaDock-setup.exe" data-free>Try free for 3 days</a>
-      <a class="btn btn-d" href="#pricing" data-buy="card">Buy — $5.50</a>
+      <a class="btn btn-w" href="#get">Get NovaDock free</a>
+      <a class="btn btn-d" href="#widgets">See the widgets</a>
     </div>
-    <div class="hero-note" data-note-win>One-time $5.50 · 14-day money-back guarantee · Try it live right here ↓</div>
+    <div class="hero-note" data-note-win>Free · Windows 10 &amp; 11 · Try it live right here ↓</div>
     <div class="pc-note" data-note-mobile>💻 NovaDock is a Windows app. Send this link to your PC and install it there.</div>
   </div>
   <div class="hero-hint" id="heroHint">This is live — hover the dock and click any widget ↓</div>
@@ -275,28 +279,29 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
   </div>
 </section>
 
-<!-- PRICING -->
-<section id="pricing">
+<!-- GET IT (free, download link by email) -->
+<section id="get">
   <div class="wrap">
-    <span class="kicker">Pricing</span>
-    <h2 class="title"><span class="g">One price.</span><br>Yours forever.</h2>
+    <span class="kicker">Get it</span>
+    <h2 class="title"><span class="g">Free.</span><br>Right to your inbox.</h2>
     <div class="price">
-      <span class="badge bf-badge">Black Friday launch price</span>
-      <div class="amount">$5.50<small>once</small></div>
-      <div class="bf-later">Price goes up to <b>$15</b> on Dec 1 · <span data-bf-cd></span></div>
-      <div style="color:var(--dim);font-size:14px">About ₹520 · lifetime license · no subscription · 14-day money-back guarantee</div>
+      <div class="amount">Free<small>for now</small></div>
+      <div style="color:var(--dim);font-size:14px">Enter your email and we’ll send the download link straight away.</div>
+      <form class="get-form" data-get-form novalidate>
+        <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-label="Your email">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
+        <button class="btn btn-w" type="submit">Email me the download</button>
+      </form>
+      <div class="fine" data-get-msg aria-live="polite"></div>
       <ul>
         <li>Dock, menu bar and Launchpad</li>
         <li>AI Assistant — Gemini, ChatGPT, Claude, Groq</li>
         <li>110 widgets — calendar, music, weather, crypto, AI and more</li>
         <li>Custom API widgets and automations</li>
-        <li>All 9 themes · free updates for life</li>
+        <li>All 9 themes</li>
         <li>Lightweight — 3 MB download, Rust + Tauri</li>
-        <li>One license for one PC</li>
       </ul>
-      <a class="btn btn-w" href="#pricing" data-buy="card">Buy NovaDock — $5.50</a>
-      <div class="fine">Not sure yet? <a href="download/NovaDock-setup.exe" data-free style="text-decoration:underline">Try it free for 3 days</a> first. Buy once — your license key and the download link arrive by email right away. Paste the key in NovaDock — done. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>. Not happy? Full refund within 14 days.</div>
-      <div class="fine" data-buy-note style="display:none">Checkout is not set up yet.</div>
+      <div class="fine">For Windows 10 &amp; 11. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>. We only use your email to send the download and the occasional update — no spam, unsubscribe any time.</div>
     </div>
   </div>
 </section>
@@ -309,7 +314,7 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
     <div class="faq">
       <details><summary>Is it a subscription?</summary><p>No. You pay $5.50 once and keep NovaDock forever, with free updates. Not happy? Email us within 14 days for a full refund.</p></details>
       <details><summary>Can I try it before buying?</summary><p>Yes — the dock at the top of this page is the real NovaDock running live in your browser. Hover it and click any widget. And if it isn't right for you on your PC, you get a full refund within 14 days.</p></details>
-      <details><summary>Where do I install it from?</summary><p>Click <b>Try free for 3 days</b> and run the installer (a few seconds, no admin rights needed). Everything works for 3 days; then buy once and paste the key from your email. Already bought? The download link is in your purchase email too. If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers. Prefer automatic updates? NovaDock is also on the <a href="https://apps.microsoft.com/detail/9N13CW1WM4K6" style="text-decoration:underline">Microsoft Store</a>.</p></details>
+      <details><summary>How do I get NovaDock?</summary><p>Enter your email in <a href="#get" style="text-decoration:underline">Get it</a> and open the link we send you, then run the installer (a few seconds, no admin rights needed). If Windows shows “Windows protected your PC”, click <b>More info</b> → <b>Run anyway</b>; it appears for new apps from small developers.</p></details>
       <details><summary>I'm on my phone. Can I use NovaDock?</summary><p>NovaDock is for Windows 10 and 11 PCs. Tap <b>Send to my PC</b> to share the link to yourself, then open it on your computer.</p></details>
       <details><summary>Does the AI cost extra?</summary><p>NovaDock connects to the AI you choose with your own API key. Google Gemini and Groq give free keys that are enough for everyday use; ChatGPT and Claude keys are billed by those companies. Your chats are never stored on our servers.</p></details>
       <details><summary>Does it work on Windows 10 and 11?</summary><p>Yes — Windows 10 (1809 or later) and Windows 11, 64-bit.</p></details>
@@ -323,8 +328,7 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}footer a:hover{color:#fff}
 <div class="end">
   <h2><span style="color:#8a8a94">Make Windows</span><br>feel new again.</h2>
   <div class="hero-cta" style="margin-top:34px">
-    <a class="btn btn-w" href="download/NovaDock-setup.exe" data-free>Try free for 3 days</a>
-    <a class="btn btn-d" href="#pricing" data-buy="card">Buy — $5.50</a>
+    <a class="btn btn-w" href="#get">Get NovaDock free</a>
   </div>
 </div>
 
@@ -376,6 +380,25 @@ window.addEventListener('message', function (e) {
   });
   document.querySelectorAll('[data-store]').forEach(function (a) { a.href = cfg.storeUrl; a.target = '_blank'; a.rel = 'noopener'; });
   if (isWin) document.querySelectorAll('[data-direct]').forEach(function (d) { d.style.display = 'block'; });
+  var GET_URL = cfg.signupUrl;
+  document.querySelectorAll('[data-get-form]').forEach(function (f) {
+    var msg = f.parentNode.querySelector('[data-get-msg]');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (f.email.value || '').trim();
+      msg.className = 'fine';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.className = 'fine err'; msg.textContent = 'Please enter a valid email address.'; return; }
+      var btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(GET_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ email: email, website: f.website.value, source: location.hash || 'website', lang: navigator.language }) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j.ok) { msg.className = 'fine ok'; msg.textContent = 'Done! Check your inbox (and Spam) for the download link from NovaDock.'; f.reset(); try { window.goatcounter && window.goatcounter.count({ path: 'signup', title: 'Signup', event: true }); } catch (x) {} }
+          else { msg.className = 'fine err'; msg.textContent = j.error || 'Something went wrong. Please try again.'; }
+        })
+        .catch(function () { msg.className = 'fine err'; msg.textContent = 'Could not send right now. Please try again in a minute.'; })
+        .finally(function () { btn.disabled = false; btn.textContent = 'Email me the download'; });
+    });
+  });
   var note = document.querySelector('[data-buy-note]');
   document.querySelectorAll('[data-buy="card"]').forEach(function (card) {
     if (cfg.checkoutUrl) { card.href = cfg.checkoutUrl; card.target = '_blank'; card.rel = 'noopener'; }
